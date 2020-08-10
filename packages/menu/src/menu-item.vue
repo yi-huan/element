@@ -30,8 +30,8 @@
 </template>
 <script>
   import Menu from './menu-mixin';
-  import ElTooltip from 'element-ui/packages/tooltip';
-  import Emitter from 'element-ui/src/mixins/emitter';
+  import ElTooltip from 'yh-element/packages/tooltip';
+  import Emitter from 'yh-element/src/mixins/emitter';
 
   export default {
     name: 'ElMenuItem',

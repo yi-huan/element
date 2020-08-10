@@ -23,9 +23,9 @@
 
 <script>
   import ImageViewer from './image-viewer';
-  import Locale from 'element-ui/src/mixins/locale';
-  import { on, off, getScrollContainer, isInContainer } from 'element-ui/src/utils/dom';
-  import { isString, isHtmlElement } from 'element-ui/src/utils/types';
+  import Locale from 'yh-element/src/mixins/locale';
+  import { on, off, getScrollContainer, isInContainer } from 'yh-element/src/utils/dom';
+  import { isString, isHtmlElement } from 'yh-element/src/utils/types';
   import throttle from 'throttle-debounce/throttle';
 
   const isSupportObjectFit = () => document.documentElement.style.objectFit !== undefined;

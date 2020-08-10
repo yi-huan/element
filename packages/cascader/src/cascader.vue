@@ -112,21 +112,21 @@
 </template>
 
 <script>
-import Popper from 'element-ui/src/utils/vue-popper';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
-import Emitter from 'element-ui/src/mixins/emitter';
-import Locale from 'element-ui/src/mixins/locale';
-import Migrating from 'element-ui/src/mixins/migrating';
-import ElInput from 'element-ui/packages/input';
-import ElTag from 'element-ui/packages/tag';
-import ElScrollbar from 'element-ui/packages/scrollbar';
-import ElCascaderPanel from 'element-ui/packages/cascader-panel';
-import AriaUtils from 'element-ui/src/utils/aria-utils';
-import { t } from 'element-ui/src/locale';
-import { isEqual, isEmpty, kebabCase } from 'element-ui/src/utils/util';
-import { isUndefined, isFunction } from 'element-ui/src/utils/types';
-import { isDef } from 'element-ui/src/utils/shared';
-import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
+import Popper from 'yh-element/src/utils/vue-popper';
+import Clickoutside from 'yh-element/src/utils/clickoutside';
+import Emitter from 'yh-element/src/mixins/emitter';
+import Locale from 'yh-element/src/mixins/locale';
+import Migrating from 'yh-element/src/mixins/migrating';
+import ElInput from 'yh-element/packages/input';
+import ElTag from 'yh-element/packages/tag';
+import ElScrollbar from 'yh-element/packages/scrollbar';
+import ElCascaderPanel from 'yh-element/packages/cascader-panel';
+import AriaUtils from 'yh-element/src/utils/aria-utils';
+import { t } from 'yh-element/src/locale';
+import { isEqual, isEmpty, kebabCase } from 'yh-element/src/utils/util';
+import { isUndefined, isFunction } from 'yh-element/src/utils/types';
+import { isDef } from 'yh-element/src/utils/shared';
+import { addResizeListener, removeResizeListener } from 'yh-element/src/utils/resize-event';
 import debounce from 'throttle-debounce/debounce';
 
 const { keys: KeyCode } = AriaUtils;

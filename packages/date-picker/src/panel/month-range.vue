@@ -84,12 +84,12 @@
     prevYear,
     nextYear,
     nextMonth
-  } from 'element-ui/src/utils/date-util';
-  import Clickoutside from 'element-ui/src/utils/clickoutside';
-  import Locale from 'element-ui/src/mixins/locale';
+  } from 'yh-element/src/utils/date-util';
+  import Clickoutside from 'yh-element/src/utils/clickoutside';
+  import Locale from 'yh-element/src/mixins/locale';
   import MonthTable from '../basic/month-table';
-  import ElInput from 'element-ui/packages/input';
-  import ElButton from 'element-ui/packages/button';
+  import ElInput from 'yh-element/packages/input';
+  import ElButton from 'yh-element/packages/button';
 
   const calcDefaultValue = (defaultValue) => {
     if (Array.isArray(defaultValue)) {

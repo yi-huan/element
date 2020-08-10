@@ -108,11 +108,11 @@
   </div>
 </template>
 <script>
-  import emitter from 'element-ui/src/mixins/emitter';
-  import Migrating from 'element-ui/src/mixins/migrating';
+  import emitter from 'yh-element/src/mixins/emitter';
+  import Migrating from 'yh-element/src/mixins/migrating';
   import calcTextareaHeight from './calcTextareaHeight';
-  import merge from 'element-ui/src/utils/merge';
-  import {isKorean} from 'element-ui/src/utils/shared';
+  import merge from 'yh-element/src/utils/merge';
+  import {isKorean} from 'yh-element/src/utils/shared';
 
   export default {
     name: 'ElInput',
