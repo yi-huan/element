@@ -1,7 +1,7 @@
 {
   "name": "yh-element",
   "version": "2.13.2",
-  "description": "A Component Library for Vue.js.",
+  "description": "forked from ElemeFE/element",
   "main": "lib/yh-element.common.js",
   "files": [
     "lib",
@@ -45,9 +45,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:ElemeFE/element.git"
+    "url": "git@github.com:yi-huan/element.git"
   },
-  "homepage": "http://element.eleme.io",
+  "homepage": "https://github.com/yi-huan/element",
   "keywords": [
     "eleme",
     "vue",
@@ -55,7 +55,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ElemeFE/element/issues"
+    "url": "https://github.com/yi-huan/element/issues"
   },
   "unpkg": "lib/index.js",
   "style": "lib/theme-chalk/index.css",
