@@ -26,7 +26,7 @@ jobs:
 
     - name: npm build, and test
       run: |
-        npm install
+        yarn
         npm run dist
         npm publish
       env:
