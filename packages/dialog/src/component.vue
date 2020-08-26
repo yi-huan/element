@@ -15,7 +15,7 @@
         :class="['el-dialog', { 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
         ref="dialog"
         :style="style">
-        <div class="el-dialog__header">
+        <div class="el-dialog__header" v-drag.isWrapEl="handleDrag">
           <slot name="title">
             <span class="el-dialog__title">{{ title }}</span>
           </slot>
@@ -41,11 +41,16 @@
   import Popup from 'yh-element/src/utils/popup';
   import Migrating from 'yh-element/src/mixins/migrating';
   import emitter from 'yh-element/src/mixins/emitter';
+  import Drag from 'yh-element/src/directives/drag';
 
   export default {
     name: 'ElDialog',
 
     mixins: [Popup, emitter, Migrating],
+
+    directives: {
+      Drag
+    },
 
     props: {
       title: {
@@ -99,7 +104,7 @@
 
       top: {
         type: String,
-        default: '15vh'
+        default: ''
       },
       beforeClose: Function,
       center: {
@@ -189,6 +194,9 @@
       },
       afterLeave() {
         this.$emit('closed');
+      },
+      handleDrag(arg) {
+        return this.$refs.dialog;
       }
     },
 

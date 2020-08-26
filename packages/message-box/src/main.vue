@@ -8,8 +8,8 @@
       role="dialog"
       aria-modal="true"
       :aria-label="title || 'dialog'">
-      <div class="el-message-box" :class="[customClass, center && 'el-message-box--center']">
-        <div class="el-message-box__header" v-if="title !== null">
+      <div class="el-message-box" :class="[customClass, center && 'el-message-box--center']" ref="message-box">
+        <div class="el-message-box__header" v-if="title !== null" v-drag.isWrapEl="handleDrag">
           <div class="el-message-box__title">
             <div
               :class="['el-message-box__status', icon]"
@@ -86,6 +86,7 @@
   import { addClass, removeClass } from 'yh-element/src/utils/dom';
   import { t } from 'yh-element/src/locale';
   import Dialog from 'yh-element/src/utils/aria-dialog';
+  import Drag from 'yh-element/src/directives/drag';
 
   let messageBox;
   let typeMap = {
@@ -97,6 +98,10 @@
 
   export default {
     mixins: [Popup, Locale],
+
+    directives: {
+      Drag
+    },
 
     props: {
       modal: {
@@ -236,6 +241,9 @@
       },
       handleClose() {
         this.handleAction('close');
+      },
+      handleDrag(arg) {
+        return this.$refs['message-box'];
       }
     },
 

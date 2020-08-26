@@ -5,12 +5,17 @@
 
 @include b(dialog) {
   position: relative;
-  margin: 0 auto 50px;
   background: $--dialog-background-color;
   border-radius: $--border-radius-small;
   box-shadow: $--dialog-box-shadow;
   box-sizing: border-box;
   width: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 96%;
+  max-height: 96%;
+  overflow: auto;
+  text-align: left;
 
   @include when(fullscreen) {
     width: 100%;
@@ -28,6 +33,16 @@
     left: 0;
     overflow: auto;
     margin: 0;
+    text-align: center;
+    font-size: 0;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+      width: 0;
+    }
   }
 
   @include e(header) {

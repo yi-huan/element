@@ -3,6 +3,7 @@
 
 @include b(message) {
   min-width: $--message-min-width;
+  max-width: 96%;
   box-sizing: border-box;
   border-radius: $--border-radius-base;
   border-width: $--border-width-base;
