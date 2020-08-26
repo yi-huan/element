@@ -36,7 +36,7 @@
     }
 
     &.el-button--default::before {
-      background: mix($--button-default-border-color, transparent, 50%);
+      background: fn(mix, $--button-default-border-color, transparent, 50%);
     }
 
     &:hover {

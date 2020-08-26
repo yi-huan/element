@@ -16,58 +16,58 @@ $--color-transition-base: color .2s cubic-bezier(.645,.045,.355,1) !default;
 /* Color
 -------------------------- */
 /// color|1|Brand Color|0
-$--color-primary: #409EFF !default;
+$--color-primary: var(--color-primary) !default; // #409EFF
 /// color|1|Background Color|4
-$--color-white: #FFFFFF !default;
+$--color-white: var(--color-white) !default; // #FFFFFF
 /// color|1|Background Color|4
-$--color-black: #000000 !default;
-$--color-primary-light-1: mix($--color-white, $--color-primary, 10%) !default; /* 53a8ff */
-$--color-primary-light-2: mix($--color-white, $--color-primary, 20%) !default; /* 66b1ff */
-$--color-primary-light-3: mix($--color-white, $--color-primary, 30%) !default; /* 79bbff */
-$--color-primary-light-4: mix($--color-white, $--color-primary, 40%) !default; /* 8cc5ff */
-$--color-primary-light-5: mix($--color-white, $--color-primary, 50%) !default; /* a0cfff */
-$--color-primary-light-6: mix($--color-white, $--color-primary, 60%) !default; /* b3d8ff */
-$--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default; /* c6e2ff */
-$--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default; /* d9ecff */
-$--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default; /* ecf5ff */
+$--color-black: var(--color-black) !default; // #000000
+$--color-primary-light-1: fn(mix, $--color-white, $--color-primary, 10%) !default; /* 53a8ff */
+$--color-primary-light-2: fn(mix, $--color-white, $--color-primary, 20%) !default; /* 66b1ff */
+$--color-primary-light-3: fn(mix, $--color-white, $--color-primary, 30%) !default; /* 79bbff */
+$--color-primary-light-4: fn(mix, $--color-white, $--color-primary, 40%) !default; /* 8cc5ff */
+$--color-primary-light-5: fn(mix, $--color-white, $--color-primary, 50%) !default; /* a0cfff */
+$--color-primary-light-6: fn(mix, $--color-white, $--color-primary, 60%) !default; /* b3d8ff */
+$--color-primary-light-7: fn(mix, $--color-white, $--color-primary, 70%) !default; /* c6e2ff */
+$--color-primary-light-8: fn(mix, $--color-white, $--color-primary, 80%) !default; /* d9ecff */
+$--color-primary-light-9: fn(mix, $--color-white, $--color-primary, 90%) !default; /* ecf5ff */
 /// color|1|Functional Color|1
-$--color-success: #67C23A !default;
+$--color-success: var(--color-success) !default; // #67C23A
 /// color|1|Functional Color|1
-$--color-warning: #E6A23C !default;
+$--color-warning: var(--color-warning) !default; // #E6A23C
 /// color|1|Functional Color|1
-$--color-danger: #F56C6C !default;
+$--color-danger: var(--color-danger) !default; // #F56C6C
 /// color|1|Functional Color|1
-$--color-info: #909399 !default;
+$--color-info: var(--color-info) !default; // #909399
 
-$--color-success-light: mix($--color-white, $--color-success, 80%) !default;
-$--color-warning-light: mix($--color-white, $--color-warning, 80%) !default;
-$--color-danger-light: mix($--color-white, $--color-danger, 80%) !default;
-$--color-info-light: mix($--color-white, $--color-info, 80%) !default;
+$--color-success-light: fn(mix, $--color-white, $--color-success, 80%) !default;
+$--color-warning-light: fn(mix, $--color-white, $--color-warning, 80%) !default;
+$--color-danger-light: fn(mix, $--color-white, $--color-danger, 80%) !default;
+$--color-info-light: fn(mix, $--color-white, $--color-info, 80%) !default;
 
-$--color-success-lighter: mix($--color-white, $--color-success, 90%) !default;
-$--color-warning-lighter: mix($--color-white, $--color-warning, 90%) !default;
-$--color-danger-lighter: mix($--color-white, $--color-danger, 90%) !default;
-$--color-info-lighter: mix($--color-white, $--color-info, 90%) !default;
+$--color-success-lighter: fn(mix, $--color-white, $--color-success, 90%) !default;
+$--color-warning-lighter: fn(mix, $--color-white, $--color-warning, 90%) !default;
+$--color-danger-lighter: fn(mix, $--color-white, $--color-danger, 90%) !default;
+$--color-info-lighter: fn(mix, $--color-white, $--color-info, 90%) !default;
 /// color|1|Font Color|2
-$--color-text-primary: #303133 !default;
+$--color-text-primary: var(--color-text-primary) !default; // #303133
 /// color|1|Font Color|2
-$--color-text-regular: #606266 !default;
+$--color-text-regular: var(--color-text-regular) !default; // #606266
 /// color|1|Font Color|2
-$--color-text-secondary: #909399 !default;
+$--color-text-secondary: var(--color-text-secondary) !default; // #909399
 /// color|1|Font Color|2
-$--color-text-placeholder: #C0C4CC !default;
+$--color-text-placeholder: var(--color-text-placeholder) !default; // #C0C4CC
 /// color|1|Border Color|3
-$--border-color-base: #DCDFE6 !default;
+$--border-color-base: var(--border-color-base) !default; // #DCDFE6
 /// color|1|Border Color|3
-$--border-color-light: #E4E7ED !default;
+$--border-color-light: var(--border-color-light) !default; // #E4E7ED
 /// color|1|Border Color|3
-$--border-color-lighter: #EBEEF5 !default;
+$--border-color-lighter: var(--border-color-lighter) !default; // #EBEEF5
 /// color|1|Border Color|3
-$--border-color-extra-light: #F2F6FC !default;
+$--border-color-extra-light: var(--border-color-extra-light) !default; // #F2F6FC
 
 // Background
 /// color|1|Background Color|4
-$--background-color-base: #F5F7FA !default;
+$--background-color-base: var(--background-color-base) !default; // #F5F7FA
 
 /* Link
 -------------------------- */
@@ -112,7 +112,7 @@ $--font-size-large: 18px !default;
 /// fontSize|1|Font Size|0
 $--font-size-medium: 16px !default;
 /// fontSize|1|Font Size|0
-$--font-size-base: 14px !default;
+$--font-size-base: 14px !default; // 14px // var(--font-size-base)
 /// fontSize|1|Font Size|0
 $--font-size-small: 13px !default;
 /// fontSize|1|Font Size|0
@@ -125,7 +125,7 @@ $--font-weight-secondary: 100 !default;
 $--font-line-height-primary: 24px !default;
 /// fontLineHeight|1|Line Height|2
 $--font-line-height-secondary: 16px !default;
-$--font-color-disabled-base: #bbb !default;
+$--font-color-disabled-base: var(--font-color-disabled-base) !default; // #bbb
 /* Size
 -------------------------- */
 $--size-base: 14px !default;
@@ -144,7 +144,7 @@ $--disabled-border-base: $--border-color-light !default;
 
 /* Icon
 -------------------------- */
-$--icon-color: #666 !default;
+$--icon-color: var(--icon-color) !default; // #666
 $--icon-color-base: $--color-info !default;
 
 /* Checkbox
@@ -165,7 +165,7 @@ $--checkbox-input-border: $--border-base !default;
 
 /// color||Color|0
 $--checkbox-disabled-border-color: $--border-color-base !default;
-$--checkbox-disabled-input-fill: #edf2fc !default;
+$--checkbox-disabled-input-fill: var(--checkbox-disabled-input-fill) !default; // #edf2fc
 $--checkbox-disabled-icon-color: $--color-text-placeholder !default;
 
 $--checkbox-disabled-checked-input-fill: $--border-color-extra-light !default;
@@ -285,7 +285,7 @@ $--select-font-size: $--font-size-base !default;
 $--select-close-hover-color: $--color-text-secondary !default;
 
 $--select-input-color: $--color-text-placeholder !default;
-$--select-multiple-input-color: #666 !default;
+$--select-multiple-input-color: var(--select-multiple-input-color) !default; // #666
 /// color||Color|0
 $--select-input-focus-border-color: $--color-primary !default;
 /// fontSize||Font|1
@@ -307,7 +307,7 @@ $--select-group-font-size: 12px !default;
 
 $--select-dropdown-background: $--color-white !default;
 $--select-dropdown-shadow: $--box-shadow-light !default;
-$--select-dropdown-empty-color: #999 !default;
+$--select-dropdown-empty-color: var(--select-dropdown-empty-color) !default; // #999
 /// height||Other|4
 $--select-dropdown-max-height: 274px !default;
 $--select-dropdown-padding: 6px 0 !default;
@@ -366,7 +366,7 @@ $--messagebox-danger-color: $--color-danger !default;
 -------------------------- */
 $--message-shadow: $--box-shadow-base !default;
 $--message-min-width: 380px !default;
-$--message-background-color: #edf2fc !default;
+$--message-background-color: var(--message-background-color) !default; // #edf2fc
 $--message-padding: 15px 15px 15px 20px !default;
 /// color||Color|0
 $--message-close-icon-color: $--color-text-placeholder !default;
@@ -488,7 +488,7 @@ $--cascader-tag-background: #f0f2f5;
 -------------------------- */
 $--group-option-flex: 0 0 (1/5) * 100% !default;
 $--group-option-offset-bottom: 12px !default;
-$--group-option-fill-hover: rgba($--color-black, 0.06) !default;
+$--group-option-fill-hover: fn(rgba, $--color-black, 0.06) !default;
 $--group-title-color: $--color-black !default;
 $--group-title-font-size: $--font-size-base !default;
 $--group-title-width: 66px !default;
@@ -500,8 +500,8 @@ $--tab-border-line: 1px solid #e4e4e4 !default;
 $--tab-header-color-active: $--color-text-secondary !default;
 $--tab-header-color-hover: $--color-text-regular !default;
 $--tab-header-color: $--color-text-regular !default;
-$--tab-header-fill-active: rgba($--color-black, 0.06) !default;
-$--tab-header-fill-hover: rgba($--color-black, 0.06) !default;
+$--tab-header-fill-active: fn(rgba, $--color-black, 0.06) !default;
+$--tab-header-fill-hover: fn(rgba, $--color-black, 0.06) !default;
 $--tab-vertical-header-width: 90px !default;
 $--tab-vertical-header-count-color: $--color-white !default;
 $--tab-vertical-header-count-fill: $--color-text-secondary !default;
@@ -759,7 +759,7 @@ $--card-padding: 20px !default;
 $--slider-main-background-color: $--color-primary !default;
 /// color||Color|0
 $--slider-runway-background-color: $--border-color-light !default;
-$--slider-button-hover-color: mix($--color-primary, black, 97%) !default;
+$--slider-button-hover-color: fn(mix, $--color-primary, black, 97%) !default;
 $--slider-stop-background-color: $--color-white !default;
 $--slider-disable-color: $--color-text-placeholder !default;
 $--slider-margin: 16px 0 !default;
@@ -807,7 +807,7 @@ $--datepicker-off-font-color: $--color-text-placeholder !default;
 $--datepicker-header-font-color: $--color-text-regular !default;
 $--datepicker-icon-color: $--color-text-primary !default;
 $--datepicker-border-color: $--disabled-border-base !default;
-$--datepicker-inner-border-color: #e4e4e4 !default;
+$--datepicker-inner-border-color: var(--datepicker-inner-border-color) !default; // #e4e4e4
 /// color||Color|0
 $--datepicker-inrange-background-color: $--border-color-extra-light !default;
 /// color||Color|0
@@ -816,7 +816,7 @@ $--datepicker-inrange-hover-background-color: $--border-color-extra-light !defau
 $--datepicker-active-color: $--color-primary !default;
 /// color||Color|0
 $--datepicker-hover-font-color: $--color-primary !default;
-$--datepicker-cell-hover-color: #fff !default;
+$--datepicker-cell-hover-color: var(--datepicker-cell-hover-color) !default; // #fff
 
 /* Loading
 --------------------------*/
@@ -827,8 +827,8 @@ $--loading-fullscreen-spinner-size: 50px !default;
 
 /* Scrollbar
 --------------------------*/
-$--scrollbar-background-color: rgba($--color-text-secondary, .3) !default;
-$--scrollbar-hover-background-color: rgba($--color-text-secondary, .5) !default;
+$--scrollbar-background-color: fn(rgba, $--color-text-secondary, .3) !default;
+$--scrollbar-hover-background-color: fn(rgba, $--color-text-secondary, .5) !default;
 
 /* Carousel
 --------------------------*/
@@ -937,7 +937,7 @@ $--link-info-font-color: $--color-info !default;
 /// border||Other|4
 $--calendar-border: $--table-border !default;
 /// color||Other|4
-$--calendar-selected-background-color: #F2F8FE !default;
+$--calendar-selected-background-color: var(--calendar-selected-background-color) !default; // #F2F8FE
 $--calendar-cell-width: 85px !default;
 
 /* Form
@@ -948,9 +948,9 @@ $--form-label-font-size: $--font-size-base !default;
 /* Avatar
 --------------------------*/
 /// color||Color|0
-$--avatar-font-color: #fff !default;
+$--avatar-font-color: var(--avatar-font-color) !default; // #fff
 /// color||Color|0
-$--avatar-background-color: #C0C4CC !default;
+$--avatar-background-color: var(--avatar-background-color) !default; // #C0C4CC
 /// fontSize||Font Size|1
 $--avatar-text-font-size: 14px !default;
 /// fontSize||Font Size|1

@@ -35,8 +35,8 @@
   }
 
   &:active {
-    color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-    border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+    color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
+    border-color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
     outline: none;
   }
 
@@ -60,15 +60,15 @@
 
     &:active {
       background: $--color-white;
-      border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-      color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+      border-color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
+      color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
       outline: none;
     }
   }
 
   @include when(active) {
-    color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
-    border-color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+    color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
+    border-color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
   }
 
   @include when(disabled) {
@@ -163,12 +163,12 @@
 
     &:hover,
     &:focus {
-      color: mix($--color-white, $--color-primary, $--button-hover-tint-percent);
+      color: fn(mix, $--color-white, $--color-primary, $--button-hover-tint-percent);
       border-color: transparent;
       background-color: transparent;
     }
     &:active {
-      color: mix($--color-black, $--color-primary, $--button-active-shade-percent);
+      color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
       border-color: transparent;
       background-color: transparent;
     }
@@ -239,21 +239,21 @@
     & > .el-button {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
-      border-left-color: rgba($--color-white, 0.5);
+      border-left-color: fn(rgba, $--color-white, 0.5);
     }
   }
 
   @each $type in (primary, success, warning, danger, info) {
     .el-button--#{$type} {
       &:first-child {
-        border-right-color: rgba($--color-white, 0.5);
+        border-right-color: fn(rgba, $--color-white, 0.5);
       }
       &:last-child {
-        border-left-color: rgba($--color-white, 0.5);
+        border-left-color: fn(rgba, $--color-white, 0.5);
       }
       &:not(:first-child):not(:last-child) {
-        border-left-color: rgba($--color-white, 0.5);
-        border-right-color: rgba($--color-white, 0.5);
+        border-left-color: fn(rgba, $--color-white, 0.5);
+        border-right-color: fn(rgba, $--color-white, 0.5);
       }
     }
   }
