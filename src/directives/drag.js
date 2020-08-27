@@ -8,10 +8,18 @@ const dragObjs = {};
  */
 function lnsNextId() { return ++lnsId; }
 
+function changeInstanceStatus(vnode, status) {
+  if (vnode.data.attrs['data-drag-status']) {
+    vnode.context[vnode.data.attrs['data-drag-status']] = status;
+  }
+}
+
 function onStart(item) {
   return function(event) {
     item.el.style.cursor = 'move';
     document.body.style.cursor = 'move';
+
+    changeInstanceStatus(item.vnode, 'start');
 
     const isTouch = event.type === 'touchstart';
     if (!isTouch) event.preventDefault();
@@ -49,6 +57,7 @@ function onStart(item) {
       item.startClientY = eventPoint.clientY;
     } else {
       item.fn({
+        event,
         el: item.el,
         status: 'start',
         clientX: eventPoint.clientX,
@@ -73,6 +82,8 @@ function onMove(item) {
     if (!currentId) {
       return;
     }
+
+    changeInstanceStatus(item.vnode, 'move');
 
     const isTouch = event.type === 'touchmove';
     if (!isTouch) event.preventDefault();
@@ -100,6 +111,7 @@ function onMove(item) {
         item.wrapEl.style.left = Math.min(Math.max(wrapLeft, item.allowLeft), item.allowRight) + 'px';
       } else {
         item.fn({
+          event,
           el: item.el,
           status: 'move',
           deltaX,
@@ -137,6 +149,7 @@ function onEnd(item) {
 
     item.el._lns_lastCoords = null;
     item.fn({
+      event,
       el: item.el,
       status: 'end',
       clientX: eventPoint.clientX,
@@ -146,11 +159,13 @@ function onEnd(item) {
     document.removeEventListener('touchmove', item.onMove);
     document.removeEventListener('mouseup', item.onEnd);
     document.removeEventListener('touchend', item.onEnd);
+
+    changeInstanceStatus(item.vnode, 'end');
   };
 }
 
 export default {
-  inserted(el, binding) {
+  inserted(el, binding, vnode) {
     if (typeof binding.value === 'function') {
       const id = lnsNextId();
       el.__lns_drag_id = id;
@@ -159,6 +174,7 @@ export default {
         id,
         fn: binding.value,
         el,
+        vnode,
         arg: binding.arg || {},
         modifiers: binding.modifiers || {}
       };

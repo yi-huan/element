@@ -197,7 +197,7 @@
           this.rootMenu.openMenu(this.index, this.indexPath);
         }, showTimeout);
 
-        if (this.appendToBody) {
+        if (this.appendToBody && this.$parent.$el !== event.target) {
           this.$parent.$el.dispatchEvent(new MouseEvent('mouseenter'));
         }
       },

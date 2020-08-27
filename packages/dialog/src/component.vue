@@ -8,6 +8,7 @@
       class="el-dialog__wrapper"
       @click.self="handleWrapperClick">
       <div
+        v-resize="handleResize"
         role="dialog"
         :key="key"
         aria-modal="true"
@@ -15,7 +16,7 @@
         :class="['el-dialog', { 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
         ref="dialog"
         :style="style">
-        <div class="el-dialog__header" v-drag.isWrapEl="handleDrag">
+        <div class="el-dialog__header" v-drag.isWrapEl="handleDrag" data-drag-status="dragStatus">
           <slot name="title">
             <span class="el-dialog__title">{{ title }}</span>
           </slot>
@@ -42,6 +43,7 @@
   import Migrating from 'yh-element/src/mixins/migrating';
   import emitter from 'yh-element/src/mixins/emitter';
   import Drag from 'yh-element/src/directives/drag';
+  import Resize from 'yh-element/src/directives/resize';
 
   export default {
     name: 'ElDialog',
@@ -49,7 +51,8 @@
     mixins: [Popup, emitter, Migrating],
 
     directives: {
-      Drag
+      Drag,
+      Resize
     },
 
     props: {
@@ -118,7 +121,10 @@
     data() {
       return {
         closed: false,
-        key: 0
+        key: 0,
+        dragStatus: '',
+        dragStatusTimer: null,
+        dragStatusOptimized: ''
       };
     },
 
@@ -143,6 +149,13 @@
             });
           }
         }
+      },
+      dragStatus(val) {
+        clearTimeout(this.dragStatusTimer);
+        this.dragStatusTimer = setTimeout(() => {
+          this.dragStatusOptimized = val;
+          this.$emit('dragStatus', val);
+        }, 50);
       }
     },
 
@@ -169,6 +182,9 @@
       },
       handleWrapperClick() {
         if (!this.closeOnClickModal) return;
+        if (this.dragStatusOptimized !== 'end') {
+          return;
+        }
         this.handleClose();
       },
       handleClose() {
@@ -197,6 +213,15 @@
       },
       handleDrag(arg) {
         return this.$refs.dialog;
+      },
+      handleResize(arg) {
+        this.$emit('resize', arg);
+        if (arg.status === 'move') {
+          return function(move) {
+            move.el.style.width = (move.startWidth + (move.moveClientX - move.startClientX) * 2) + 'px';
+            move.el.style.height = (move.startHeight + (move.moveClientY - move.startClientY) * 2) + 'px';
+          };
+        }
       }
     },
 
