@@ -54,6 +54,7 @@
 <script>
 import { on, off } from 'yh-element/src/utils/dom';
 import { rafThrottle, isFirefox } from 'yh-element/src/utils/util';
+import { PopupManager } from 'yh-element/src/utils/popup';
 
 const Mode = {
   CONTAIN: {
@@ -76,10 +77,10 @@ export default {
       type: Array,
       default: () => []
     },
-    zIndex: {
-      type: Number,
-      default: 2000
-    },
+    // zIndex: {
+    //   type: Number,
+    //   default: 2000
+    // },
     onSwitch: {
       type: Function,
       default: () => {}
@@ -107,7 +108,8 @@ export default {
         offsetX: 0,
         offsetY: 0,
         enableTransition: false
-      }
+      },
+      zIndex: PopupManager.nextZIndex()
     };
   },
   computed: {

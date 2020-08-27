@@ -84,36 +84,38 @@
         const nav = this.$refs.nav;
         const activeTab = this.$el.querySelector('.is-active');
         if (!activeTab) return;
-        // 添加延时使右侧箭头先加载出来
-        this.$nextTick(() => {
-          const navScroll = this.$refs.navScroll;
-          const isHorizontal = ['top', 'bottom'].indexOf(this.rootTabs.tabPosition) !== -1;
-          const activeTabBounding = activeTab.getBoundingClientRect();
-          const navScrollBounding = navScroll.getBoundingClientRect();
-          const maxOffset = isHorizontal
-            ? nav.offsetWidth - navScrollBounding.width
-            : nav.offsetHeight - navScrollBounding.height;
-          const currentOffset = this.navOffset;
-          let newOffset = currentOffset;
+        // 添加延时使右侧箭头和关闭按钮先加载出来（关闭按钮动画 300 毫秒）
+        setTimeout(() => {
+          this.$nextTick(() => {
+            const navScroll = this.$refs.navScroll;
+            const isHorizontal = ['top', 'bottom'].indexOf(this.rootTabs.tabPosition) !== -1;
+            const activeTabBounding = activeTab.getBoundingClientRect();
+            const navScrollBounding = navScroll.getBoundingClientRect();
+            const maxOffset = isHorizontal
+              ? nav.offsetWidth - navScrollBounding.width
+              : nav.offsetHeight - navScrollBounding.height;
+            const currentOffset = this.navOffset;
+            let newOffset = currentOffset;
 
-          if (isHorizontal) {
-            if (activeTabBounding.left < navScrollBounding.left) {
-              newOffset = currentOffset - (navScrollBounding.left - activeTabBounding.left);
+            if (isHorizontal) {
+              if (activeTabBounding.left < navScrollBounding.left) {
+                newOffset = currentOffset - (navScrollBounding.left - activeTabBounding.left);
+              }
+              if (activeTabBounding.right > navScrollBounding.right) {
+                newOffset = currentOffset + activeTabBounding.right - navScrollBounding.right;
+              }
+            } else {
+              if (activeTabBounding.top < navScrollBounding.top) {
+                newOffset = currentOffset - (navScrollBounding.top - activeTabBounding.top);
+              }
+              if (activeTabBounding.bottom > navScrollBounding.bottom) {
+                newOffset = currentOffset + (activeTabBounding.bottom - navScrollBounding.bottom);
+              }
             }
-            if (activeTabBounding.right > navScrollBounding.right) {
-              newOffset = currentOffset + activeTabBounding.right - navScrollBounding.right;
-            }
-          } else {
-            if (activeTabBounding.top < navScrollBounding.top) {
-              newOffset = currentOffset - (navScrollBounding.top - activeTabBounding.top);
-            }
-            if (activeTabBounding.bottom > navScrollBounding.bottom) {
-              newOffset = currentOffset + (activeTabBounding.bottom - navScrollBounding.bottom);
-            }
-          }
-          newOffset = Math.max(newOffset, 0);
-          this.navOffset = Math.min(newOffset, maxOffset);
-        });
+            newOffset = Math.max(newOffset, 0);
+            this.navOffset = Math.min(newOffset, maxOffset);
+          });
+        }, 350);
       },
       update() {
         if (!this.$refs.nav) return;
@@ -129,8 +131,8 @@
             prev: 0,
             next: 0
           };
-          this.scrollable.prev = currentOffset;
-          this.scrollable.next = currentOffset + containerSize < navSize;
+          this.scrollable.prev = Math.floor(currentOffset);
+          this.scrollable.next = Math.ceil(currentOffset + containerSize) + 1 < navSize;
           if (navSize - currentOffset < containerSize) {
             this.navOffset = navSize - containerSize;
           }
@@ -197,7 +199,11 @@
     },
 
     updated() {
-      this.update();
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.update();
+        });
+      }, 360);
     },
 
     render(h) {
