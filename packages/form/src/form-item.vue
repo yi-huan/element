@@ -199,6 +199,17 @@
         const descriptor = {};
         if (rules && rules.length > 0) {
           rules.forEach(rule => {
+            if (rule.required && typeof rule.message === 'undefined' && this.label) {
+              if (this.$parent && this.$parent.$options && typeof this.$parent.item === 'object' && this.$parent.$options._componentTag === 'y-form-item') { // 自用
+                // 控件类型
+                const controlType = this.$parent.item.type;
+                const isSelect = ['select', 'radio', 'checkbox', 'date-picker', 'time-picker', 'switch'].indexOf(controlType) !== -1;
+
+                rule.message = '请' + (isSelect ? '选择' : '填写') + ' “' + this.label + '”';
+              } else {
+                rule.message = '“' + this.label + '” 不能为空';
+              }
+            }
             delete rule.trigger;
           });
         }

@@ -54,7 +54,7 @@
     padding: 8px;
 
     button {
-      background: transparent;
+      background: var(--const-transparent);
       border: none;
       color: $--color-text-regular;
       cursor: pointer;

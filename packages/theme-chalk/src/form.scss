@@ -151,7 +151,7 @@
     & .el-input-group__append,
     & .el-input-group__prepend {
       & .el-input__inner {
-        border-color: transparent;
+        border-color: var(--const-transparent);
       }
     }
     .el-input__validateIcon {

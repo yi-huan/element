@@ -93,7 +93,7 @@
     }
 
     &.is-leaf {
-      color: transparent;
+      color: var(--const-transparent);
       cursor: default;
     }
   }
@@ -110,7 +110,7 @@
 
   & > .el-tree-node__children {
     overflow: hidden;
-    background-color: transparent;
+    background-color: var(--const-transparent);
   }
 
   &.is-expanded > .el-tree-node__children {

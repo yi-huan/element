@@ -9,7 +9,7 @@
       aria-modal="true"
       :aria-label="title || 'dialog'">
       <div class="el-message-box" :class="[customClass, center && 'el-message-box--center']" ref="message-box">
-        <div class="el-message-box__header" v-if="title !== null" v-drag.isWrapEl="handleDrag">
+        <div class="el-message-box__header" v-if="title !== null" v-drag.isWrapEl="handleDrag" data-drag-status="dragStatus">
           <div class="el-message-box__title">
             <div
               :class="['el-message-box__status', icon]"
@@ -180,6 +180,9 @@
 
       handleWrapperClick() {
         if (this.closeOnClickModal) {
+          if (this.dragStatusOptimized !== 'end') {
+            return;
+          }
           this.handleAction(this.distinguishCancelAndClose ? 'close' : 'cancel');
         }
       },
@@ -283,6 +286,14 @@
           this.editorErrorMessage = '';
           removeClass(this.getInputElement(), 'invalid');
         }
+      },
+
+      dragStatus(val) {
+        clearTimeout(this.dragStatusTimer);
+        this.dragStatusTimer = setTimeout(() => {
+          this.dragStatusOptimized = val;
+          this.$emit('dragStatus', val);
+        }, 50);
       }
     },
 
@@ -333,7 +344,10 @@
         dangerouslyUseHTMLString: false,
         focusAfterClosed: null,
         isOnComposition: false,
-        distinguishCancelAndClose: false
+        distinguishCancelAndClose: false,
+        dragStatus: '',
+        dragStatusTimer: null,
+        dragStatusOptimized: ''
       };
     }
   };

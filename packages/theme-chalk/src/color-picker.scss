@@ -212,12 +212,12 @@
     border-radius: 2px;
     padding: 0 20px;
     cursor: pointer;
-    background-color: transparent;
+    background-color: var(--const-transparent);
     outline: none;
     font-size: 12px;
 
     &[disabled] {
-      color: #cccccc;
+      color: #cccccc !important;
       cursor: not-allowed;
     }
     &:hover {

@@ -159,7 +159,7 @@ $directions: rtl, ltr, ttb, btt;
     cursor: pointer;
     font-size: $--font-size-extra-large;
     color: inherit;
-    background-color: transparent;
+    background-color: var(--const-transparent);
   }
 
   &__body {

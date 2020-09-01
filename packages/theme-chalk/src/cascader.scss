@@ -101,7 +101,7 @@
       background: $--cascader-tag-background;
 
       &:not(.is-hit) {
-        border-color: transparent;
+        border-color: var(--const-transparent);
       }
 
       > span {

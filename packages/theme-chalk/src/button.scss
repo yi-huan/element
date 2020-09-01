@@ -83,7 +83,7 @@
     }
 
     &.el-button--text {
-      background-color: transparent;
+      background-color: var(--const-transparent);
     }
 
     &.is-plain {
@@ -155,28 +155,28 @@
     }
   }
   @include m(text) {
-    border-color: transparent;
+    border-color: var(--const-transparent);
     color: $--color-primary;
-    background: transparent;
+    background: var(--const-transparent);
     padding-left: 0;
     padding-right: 0;
 
     &:hover,
     &:focus {
       color: fn(mix, $--color-white, $--color-primary, $--button-hover-tint-percent);
-      border-color: transparent;
-      background-color: transparent;
+      border-color: var(--const-transparent);
+      background-color: var(--const-transparent);
     }
     &:active {
       color: fn(mix, $--color-black, $--color-primary, $--button-active-shade-percent);
-      border-color: transparent;
-      background-color: transparent;
+      border-color: var(--const-transparent);
+      background-color: var(--const-transparent);
     }
 
     &.is-disabled,
     &.is-disabled:hover,
     &.is-disabled:focus {
-      border-color: transparent;
+      border-color: var(--const-transparent);
     }
   }
 }

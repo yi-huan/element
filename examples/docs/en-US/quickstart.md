@@ -38,12 +38,12 @@ The above imports Element entirely. Note that CSS file needs to be imported sepa
 
 #### On demand
 
-With the help of [babel-plugin-component](https://github.com/QingWei-Li/babel-plugin-component), we can import components we actually need, making the project smaller than otherwise.
+With the help of [babel-plugin-elementui-demand](https://github.com/yi-huan/babel-plugin-component), we can import components we actually need, making the project smaller than otherwise.
 
-First, install babel-plugin-component:
+First, install babel-plugin-elementui-demand:
 
 ```bash
-npm install babel-plugin-component -D
+npm install babel-plugin-elementui-demand -D
 ```
 
 Then edit .babelrc:
@@ -53,10 +53,12 @@ Then edit .babelrc:
   "presets": [["es2015", { "modules": false }]],
   "plugins": [
     [
-      "component",
+      "elementui-demand",
       {
         "libraryName": "yh-element",
-        "styleLibraryName": "theme-chalk"
+        "styleLibraryName": "theme-chalk",
+        "ext": ".scss",
+        "isElementUI": true
       }
     ]
   ]

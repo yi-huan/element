@@ -38,7 +38,7 @@
       color: $--color-primary;
     }
     @include when(active) {
-      border-bottom-color: transparent;
+      border-bottom-color: var(--const-transparent);
     }
   }
 

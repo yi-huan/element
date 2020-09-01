@@ -9,7 +9,7 @@ const dragObjs = {};
 function lnsNextId() { return ++lnsId; }
 
 function changeInstanceStatus(vnode, status) {
-  if (vnode.data.attrs['data-drag-status']) {
+  if (vnode.data.attrs && vnode.data.attrs['data-drag-status']) {
     vnode.context[vnode.data.attrs['data-drag-status']] = status;
   }
 }

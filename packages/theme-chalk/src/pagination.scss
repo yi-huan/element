@@ -46,7 +46,7 @@
   button {
     border: none;
     padding: 0 6px;
-    background: transparent;
+    background: var(--const-transparent);
 
     &:focus {
       outline: none;
@@ -99,7 +99,7 @@
     .el-pager li.btn-quicknext,
     .el-pager li.btn-quickprev,
     .el-pager li:last-child {
-      border-color: transparent;
+      border-color: var(--const-transparent);
       font-size: 12px;
       line-height: 22px;
       height: 22px;

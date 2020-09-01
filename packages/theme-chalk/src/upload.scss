@@ -400,7 +400,7 @@
 
       &:hover {
         .el-upload-list__item-status-label {
-          background: transparent;
+          background: var(--const-transparent);
           box-shadow: none;
           top: -2px;
           right: -12px;

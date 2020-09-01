@@ -55,7 +55,7 @@
     top: $--dialog-padding-primary;
     right: $--dialog-padding-primary;
     padding: 0;
-    background: transparent;
+    background: var(--const-transparent);
     border: none;
     outline: none;
     cursor: pointer;

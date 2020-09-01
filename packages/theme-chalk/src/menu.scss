@@ -56,7 +56,7 @@
       height: 60px;
       line-height: 60px;
       margin: 0;
-      border-bottom: 2px solid transparent;
+      border-bottom: 2px solid var(--const-transparent);
       color: $--color-text-secondary;
 
       a,
@@ -66,7 +66,7 @@
 
       &:not(.is-disabled):hover,
       &:not(.is-disabled):focus{
-        background-color: #fff;
+        background-color: $--color-white; // #fff
       }
     }
     & > .el-submenu {
@@ -90,11 +90,11 @@
       & .el-submenu__title {
         height: 60px;
         line-height: 60px;
-        border-bottom: 2px solid transparent;
+        border-bottom: 2px solid var(--const-transparent);
         color: $--color-text-secondary;
 
         &:hover {
-          background-color: #fff;
+          background-color: $--color-white; // #fff
         }
       }
       & .el-submenu__icon-arrow {

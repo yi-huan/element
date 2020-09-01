@@ -85,4 +85,11 @@
   --------------------------*/
   --avatar-font-color: #{inspect(if(global-variable-exists(avatar-font-color), $avatar-font-color, #fff))};
   --avatar-background-color: #{inspect(if(global-variable-exists(avatar-background-color), $avatar-background-color, #C0C4CC))};
+
+  // 辅助值（主要用于使一起在 style 上）
+  // ==================================================
+  --const-0: 0;
+  --const-none: none;
+  --const-transparent: transparent;
+  --const-color-fff: #fff;
 }

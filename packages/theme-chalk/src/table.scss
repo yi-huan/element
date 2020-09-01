@@ -71,7 +71,7 @@
     }
 
     &:hover {
-      background-color: transparent !important;
+      background-color: var(--const-transparent) !important;
     }
   }
 
@@ -277,7 +277,7 @@
     border-bottom: none;
 
     &.el-loading-parent--relative {
-      border-color: transparent;
+      border-color: var(--const-transparent);
     }
 
     th, td {
@@ -449,7 +449,7 @@
   .sort-caret {
     width: 0;
     height: 0;
-    border: solid 5px transparent;
+    border: solid 5px var(--const-transparent);
     position: absolute;
     left: 7px;
 

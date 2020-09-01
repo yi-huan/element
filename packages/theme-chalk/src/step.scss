@@ -246,7 +246,7 @@
     }
 
     @include e(icon) {
-      background: transparent;
+      background: var(--const-transparent);
       width: 16px;
       height: 16px;
       font-size: 12px;

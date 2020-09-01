@@ -97,7 +97,7 @@
     z-index: 1001;
     top: $--slider-button-wrapper-offset;
     transform: translateX(-50%);
-    background-color: transparent;
+    background-color: var(--const-transparent);
     text-align: center;
     user-select: none;
     line-height: normal;

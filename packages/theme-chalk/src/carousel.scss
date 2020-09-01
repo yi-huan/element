@@ -106,7 +106,7 @@
   }
 
   @include e(indicator) {
-    background-color: transparent;
+    background-color: var(--const-transparent);
     cursor: pointer;
 
     &:hover button {

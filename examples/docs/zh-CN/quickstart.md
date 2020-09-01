@@ -38,12 +38,12 @@ new Vue({
 
 #### 按需引入
 
-借助 [babel-plugin-component](https://github.com/QingWei-Li/babel-plugin-component)，我们可以只引入需要的组件，以达到减小项目体积的目的。
+借助 [babel-plugin-elementui-demand](https://github.com/yi-huan/babel-plugin-component)，我们可以只引入需要的组件，以达到减小项目体积的目的。
 
-首先，安装 babel-plugin-component：
+首先，安装 babel-plugin-elementui-demand：
 
 ```bash
-npm install babel-plugin-component -D
+npm install babel-plugin-elementui-demand -D
 ```
 
 然后，将 .babelrc 修改为：
@@ -53,10 +53,12 @@ npm install babel-plugin-component -D
   "presets": [["es2015", { "modules": false }]],
   "plugins": [
     [
-      "component",
+      "elementui-demand",
       {
         "libraryName": "yh-element",
-        "styleLibraryName": "theme-chalk"
+        "styleLibraryName": "theme-chalk",
+        "ext": ".scss",
+        "isElementUI": true
       }
     ]
   ]

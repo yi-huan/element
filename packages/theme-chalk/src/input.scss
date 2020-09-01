@@ -302,8 +302,8 @@
     button.el-button,
     div.el-select .el-input__inner,
     div.el-select:hover .el-input__inner {
-      border-color: transparent;
-      background-color: transparent;
+      border-color: var(--const-transparent);
+      background-color: var(--const-transparent);
       color: inherit;
       border-top: 0;
       border-bottom: 0;
@@ -333,7 +333,7 @@
       border-bottom-left-radius: 0;
     }
     .el-select .el-input.is-focus .el-input__inner {
-      border-color: transparent;
+      border-color: var(--const-transparent);
     }
   }
 
@@ -343,7 +343,7 @@
       border-bottom-right-radius: 0;
     }
     .el-select .el-input.is-focus .el-input__inner {
-      border-color: transparent;
+      border-color: var(--const-transparent);
     }
   }
 }
