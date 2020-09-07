@@ -1,51 +1,51 @@
 :root {
   /// color|1|Brand Color|0
   // 主题色
-  /* { "category": "color", "group": "main", "text": "主色", "type": "color", "order": 0 } */
+  /*! { "category": "color", "group": "main", "text": "主色", "type": "color", "order": 0 } */
   --color-primary: #{inspect(if(global-variable-exists(color-primary), $color-primary, #409EFF))};
 
   /// color|1|Functional Color|1
   // 辅助颜色
-  /* { "category": "color", "group": "functional", "text": "成功", "type": "color" } */
+  /*! { "category": "color", "group": "functional", "text": "成功", "type": "color" } */
   --color-success: #{inspect(if(global-variable-exists(color-success), $color-success, #67C23A))};
-  /* { "category": "color", "group": "functional", "text": "警告", "type": "color" } */
+  /*! { "category": "color", "group": "functional", "text": "警告", "type": "color" } */
   --color-warning: #{inspect(if(global-variable-exists(color-warning), $color-warning, #E6A23C))};
-  /* { "category": "color", "group": "functional", "text": "错误", "type": "color" } */
+  /*! { "category": "color", "group": "functional", "text": "错误", "type": "color" } */
   --color-danger: #{inspect(if(global-variable-exists(color-danger), $color-danger, #F56C6C))};
-  /* { "category": "color", "group": "functional", "text": "辅助", "type": "color" } */
+  /*! { "category": "color", "group": "functional", "text": "辅助", "type": "color" } */
   --color-info: #{inspect(if(global-variable-exists(color-info), $color-info, #909399))};
 
   /// color|1|Font Color|2
   // 文字颜色
-  /* { "category": "color", "group": "font", "text": "主要文字", "type": "color" } */
+  /*! { "category": "color", "group": "font", "text": "主要文字", "type": "color" } */
   --color-text-primary: #{inspect(if(global-variable-exists(color-text-primary), $color-text-primary, #303133))};
-  /* { "category": "color", "group": "font", "text": "常规文字", "type": "color" } */
+  /*! { "category": "color", "group": "font", "text": "常规文字", "type": "color" } */
   --color-text-regular: #{inspect(if(global-variable-exists(color-text-regular), $color-text-regular, #606266))};
-  /* { "category": "color", "group": "font", "text": "次要文字", "type": "color" } */
+  /*! { "category": "color", "group": "font", "text": "次要文字", "type": "color" } */
   --color-text-secondary: #{inspect(if(global-variable-exists(color-text-secondary), $color-text-secondary, #909399))};
-  /* { "category": "color", "group": "font", "text": "占位文字", "type": "color" } */
+  /*! { "category": "color", "group": "font", "text": "占位文字", "type": "color" } */
   --color-text-placeholder: #{inspect(if(global-variable-exists(color-text-placeholder), $color-text-placeholder, #C0C4CC))};
 
   /// color|1|Border Color|3
   // 边框颜色
-  /* { "category": "color", "group": "border", "text": "一级边框", "type": "color" } */
+  /*! { "category": "color", "group": "border", "text": "一级边框", "type": "color" } */
   --border-color-base: #{inspect(if(global-variable-exists(border-color-base), $border-color-base, #DCDFE6))};
-  /* { "category": "color", "group": "border", "text": "二级边框", "type": "color" } */
+  /*! { "category": "color", "group": "border", "text": "二级边框", "type": "color" } */
   --border-color-light: #{inspect(if(global-variable-exists(border-color-light), $border-color-light, #E4E7ED))};
-  /* { "category": "color", "group": "border", "text": "三级边框", "type": "color" } */
+  /*! { "category": "color", "group": "border", "text": "三级边框", "type": "color" } */
   --border-color-lighter: #{inspect(if(global-variable-exists(border-color-lighter), $border-color-lighter, #EBEEF5))};
-  /* { "category": "color", "group": "border", "text": "四级边框", "type": "color" } */
+  /*! { "category": "color", "group": "border", "text": "四级边框", "type": "color" } */
   --border-color-extra-light: #{inspect(if(global-variable-exists(border-color-extra-light), $border-color-extra-light, #F2F6FC))};
 
   /// color|1|Background Color|4
   // 背景颜色
-  /* { "category": "color", "group": "background", "text": "基础白色", "type": "color" } */
+  /*! { "category": "color", "group": "background", "text": "基础白色", "type": "color" } */
   --color-white: #{inspect(if(global-variable-exists(color-white), $color-white, #FFFFFF))};
-  /* { "category": "color", "group": "background", "text": "基础黑色", "type": "color" } */
+  /*! { "category": "color", "group": "background", "text": "基础黑色", "type": "color" } */
   --color-black: #{inspect(if(global-variable-exists(color-black), $color-black, #000000))};
 
   // Background
-  /* { "category": "color", "group": "background", "text": "基础背景色", "type": "color" } */
+  /*! { "category": "color", "group": "background", "text": "基础背景色", "type": "color" } */
   --background-color-base: #{inspect(if(global-variable-exists(background-color-base), $background-color-base, #F5F7FA))};
 
   /* Typography

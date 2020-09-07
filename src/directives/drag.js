@@ -45,10 +45,12 @@ function onStart(item) {
       item.wrapHeight = wrapRect.height || wrapRect.bottom - wrapRect.top;
 
       // 允许的边框位置
-      item.allowTop = Math.floor(top - wrapRect.top);
-      item.allowRight = Math.floor(left + item.clientWidth - wrapRect.right);
-      item.allowBottom = Math.floor(top + item.clientHeight - wrapRect.bottom);
-      item.allowLeft = Math.floor(left - wrapRect.left);
+      if (item.arg === 'parentLimit') {
+        item.allowTop = Math.floor(top - wrapRect.top);
+        item.allowRight = Math.floor(left + item.clientWidth - wrapRect.right);
+        item.allowBottom = Math.floor(top + item.clientHeight - wrapRect.bottom);
+        item.allowLeft = Math.floor(left - wrapRect.left);
+      }
 
       item.startWrapTop = top;
       item.startWrapLeft = left;
@@ -107,8 +109,8 @@ function onMove(item) {
         // item.wrapEl.style.top = top + deltaY + 'px';
         const wrapTop = item.startWrapTop + clientY - item.startClientY;
         const wrapLeft = item.startWrapLeft + clientX - item.startClientX;
-        item.wrapEl.style.top = Math.min(Math.max(wrapTop, item.allowTop), item.allowBottom) + 'px';
-        item.wrapEl.style.left = Math.min(Math.max(wrapLeft, item.allowLeft), item.allowRight) + 'px';
+        item.wrapEl.style.top = (item.arg === 'parentLimit' ? Math.min(Math.max(wrapTop, item.allowTop), item.allowBottom) : wrapTop) + 'px';
+        item.wrapEl.style.left = (item.arg === 'parentLimit' ? Math.min(Math.max(wrapLeft, item.allowLeft), item.allowRight) : wrapLeft) + 'px';
       } else {
         item.fn({
           event,

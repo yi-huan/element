@@ -16,7 +16,7 @@
         :class="['el-dialog', { 'is-fullscreen': fullscreen, 'el-dialog--center': center }, customClass]"
         ref="dialog"
         :style="style">
-        <div class="el-dialog__header" v-drag.isWrapEl="handleDrag" data-drag-status="dragStatus">
+        <div class="el-dialog__header" v-drag:[parentLimitDrag].isWrapEl="handleDrag" data-drag-status="dragStatus">
           <slot name="title">
             <span class="el-dialog__title">{{ title }}</span>
           </slot>
@@ -115,7 +115,13 @@
         default: false
       },
 
-      destroyOnClose: Boolean
+      destroyOnClose: Boolean,
+
+      /** 限制弹窗移动不能超出 wrap */
+      dragParentLimit: {
+        type: Boolean,
+        default: true
+      }
     },
 
     data() {
@@ -169,6 +175,10 @@
           }
         }
         return style;
+      },
+
+      parentLimitDrag() {
+        return this.dragParentLimit ? 'parentLimit' : '';
       }
     },
 
@@ -182,7 +192,7 @@
       },
       handleWrapperClick() {
         if (!this.closeOnClickModal) return;
-        if (this.dragStatusOptimized !== 'end') {
+        if (this.dragStatusOptimized !== '' && this.dragStatusOptimized !== 'end') {
           return;
         }
         this.handleClose();

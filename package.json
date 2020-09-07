@@ -1,6 +1,6 @@
 {
   "name": "yh-element",
-  "version": "2.13.2-beta.5",
+  "version": "2.13.2-beta.6",
   "description": "forked from ElemeFE/element",
   "main": "lib/yh-element.common.js",
   "files": [
@@ -68,7 +68,7 @@
     "throttle-debounce": "^1.0.1"
   },
   "peerDependencies": {
-    "vue": "^2.5.17"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.6.0",
@@ -135,10 +135,10 @@
     "uglifyjs-webpack-plugin": "^2.1.1",
     "uppercamelcase": "^1.1.0",
     "url-loader": "^1.0.1",
-    "vue": "2.5.21",
+    "vue": "2.6.11",
     "vue-loader": "^15.7.0",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "2.5.21",
+    "vue-template-compiler": "2.6.11",
     "vue-template-es2015-compiler": "^1.6.0",
     "webpack": "^4.14.0",
     "webpack-cli": "^3.0.8",

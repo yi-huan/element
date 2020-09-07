@@ -179,10 +179,10 @@
       },
 
       handleWrapperClick() {
+        if (this.dragStatusOptimized !== '' && this.dragStatusOptimized !== 'end') {
+          return;
+        }
         if (this.closeOnClickModal) {
-          if (this.dragStatusOptimized !== 'end') {
-            return;
-          }
           this.handleAction(this.distinguishCancelAndClose ? 'close' : 'cancel');
         }
       },
