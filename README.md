@@ -5,6 +5,10 @@
 
 > forked from [ElemeFE/element](https://github.com/ElemeFE/element)
 
+Element will stay with Vue 2.x 
+
+For Vue 3.0, we recommend using [Element Plus](https://github.com/element-plus/element-plus) from the same team
+
 ## Links
 - Homepage and documentation
   - [International users](http://element.eleme.io/#/en-US)
@@ -13,6 +17,7 @@
   - [French users](http://element.eleme.io/#/fr-FR)
 - [awesome-element](https://github.com/ElementUI/awesome-element)
 - [FAQ](./FAQ.md)
+- [Vue.js 3.0 migration](https://github.com/element-plus/element-plus)
 - [Customize theme](http://element.eleme.io/#/en-US/component/custom-theme)
 - [Preview and generate theme online](https://elementui.github.io/theme-chalk-preview)
 
@@ -67,3 +72,14 @@ Please make sure to read the contributing guide ([中文](https://github.com/Ele
 
 ## LICENSE
 [MIT](LICENSE)
+
+## 其他说明
+开发
+`npm run dev`
+
+打包
+修改 package.json 版本号后
+`npm run dist`
+
+发布到 npm
+`npm publish`
