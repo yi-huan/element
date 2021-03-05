@@ -61,6 +61,7 @@ function onStart(item) {
       item.fn({
         event,
         el: item.el,
+        arg: item.arg,
         status: 'start',
         clientX: eventPoint.clientX,
         clientY: eventPoint.clientY,
@@ -115,6 +116,7 @@ function onMove(item) {
         item.fn({
           event,
           el: item.el,
+          arg: item.arg,
           status: 'move',
           deltaX,
           deltaY,
@@ -153,6 +155,7 @@ function onEnd(item) {
     item.fn({
       event,
       el: item.el,
+      arg: item.arg,
       status: 'end',
       clientX: eventPoint.clientX,
       clientY: eventPoint.clientY
@@ -168,16 +171,17 @@ function onEnd(item) {
 
 export default {
   inserted(el, binding, vnode) {
-    if (typeof binding.value === 'function') {
+    // console.log('ebinding', binding);
+    if (typeof binding.value === 'function' || (typeof binding.value === 'object' && typeof binding.value.value === 'function')) {
       const id = lnsNextId();
       el.__lns_drag_id = id;
 
       const item = {
         id,
-        fn: binding.value,
+        fn: typeof binding.value === 'function' ? binding.value : binding.value.value,
         el,
         vnode,
-        arg: binding.arg || {},
+        arg: binding.arg || binding.value.arg || {},
         modifiers: binding.modifiers || {}
       };
 

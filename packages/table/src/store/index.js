@@ -128,6 +128,17 @@ Watcher.prototype.mutations = {
 
   setCurrentRow(states, row) {
     this.updateCurrentRow(row);
+  },
+
+  // 更新拖动的元素
+  updateDrag(states, name, data) {
+    if (typeof data === 'object') {
+      for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+          states[name][key] = data[key];
+        }
+      }
+    }
   }
 };
 

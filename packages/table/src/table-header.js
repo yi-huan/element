@@ -99,9 +99,9 @@ export default {
                   columns.map((column, cellIndex) => (<th
                     colspan={ column.colSpan }
                     rowspan={ column.rowSpan }
-                    on-mousemove={ ($event) => this.handleMouseMove($event, column) }
+                    on-mousemove={ ($event) => this.handleMouseMove($event, column, cellIndex) }
                     on-mouseout={ this.handleMouseOut }
-                    on-mousedown={ ($event) => this.handleMouseDown($event, column) }
+                    on-mousedown={ ($event) => this.handleMouseDown($event, column, cellIndex) }
                     on-click={ ($event) => this.handleHeaderClick($event, column) }
                     on-contextmenu={ ($event) => this.handleHeaderContextMenu($event, column) }
                     style={ this.getHeaderCellStyle(rowIndex, cellIndex, columns, column) }
@@ -183,7 +183,8 @@ export default {
       rightFixedLeafCount: 'rightFixedLeafColumnsLength',
       columnsCount: states => states.columns.length,
       leftFixedCount: states => states.fixedColumns.length,
-      rightFixedCount: states => states.rightFixedColumns.length
+      rightFixedCount: states => states.rightFixedColumns.length,
+      dragGhostState: 'dragGhostState'
     })
   },
 
@@ -340,63 +341,137 @@ export default {
       this.$parent.$emit('header-contextmenu', column, event);
     },
 
-    handleMouseDown(event, column) {
+    handleMouseDown(event, column, index) {
       if (this.$isServer) return;
       if (column.children && column.children.length > 0) return;
       /* istanbul ignore if */
-      if (this.draggingColumn && this.border) {
-        this.dragging = true;
-
-        this.$parent.resizeProxyVisible = true;
+      if (this.border) {
+        this.store.commit('updateDrag', 'dragGhostState', {
+          dragging: true
+        });
+        this.draggingColumn = column;
 
         const table = this.$parent;
-        const tableEl = table.$el;
-        const tableLeft = tableEl.getBoundingClientRect().left;
-        const columnEl = this.$el.querySelector(`th.${column.id}`);
+        const columnEl = event.currentTarget;
         const columnRect = columnEl.getBoundingClientRect();
-        const minLeft = columnRect.left - tableLeft + 30;
+
+        const pointX = event.clientX;
+        const pointY = event.clientY;
 
         addClass(columnEl, 'noclick');
-
-        this.dragState = {
-          startMouseLeft: event.clientX,
-          startLeft: columnRect.right - tableLeft,
-          startColumnLeft: columnRect.left - tableLeft,
-          tableLeft
-        };
-
-        const resizeProxy = table.$refs.resizeProxy;
-        resizeProxy.style.left = this.dragState.startLeft + 'px';
 
         document.onselectstart = function() { return false; };
         document.ondragstart = function() { return false; };
 
-        const handleMouseMove = (event) => {
-          const deltaLeft = event.clientX - this.dragState.startMouseLeft;
-          const proxyLeft = this.dragState.startLeft + deltaLeft;
+        /** 调整列宽的处理 */
+        const handelResize = () => {
+          table.resizeProxyVisible = true;
 
-          resizeProxy.style.left = Math.max(minLeft, proxyLeft) + 'px';
+          const tableEl = table.$el;
+          const tableLeft = tableEl.getBoundingClientRect().left;
+          const minLeft = columnRect.left - tableLeft + 30;
+
+          this.dragState = {
+            startMouseLeft: pointX,
+            startLeft: columnRect.right - tableLeft,
+            startColumnLeft: columnRect.left - tableLeft,
+            tableLeft
+          };
+
+          const resizeProxy = table.$refs.resizeProxy;
+          resizeProxy.style.left = this.dragState.startLeft + 'px';
+
+          return {
+            handleMouseMove: (event) => {
+              const deltaLeft = event.clientX - this.dragState.startMouseLeft;
+              const proxyLeft = this.dragState.startLeft + deltaLeft;
+
+              resizeProxy.style.left = Math.max(minLeft, proxyLeft) + 'px';
+            },
+            currentHandleMouseUp: () => {
+              const {
+                startColumnLeft,
+                startLeft
+              } = this.dragState;
+              const finalLeft = parseInt(resizeProxy.style.left, 10);
+              const columnWidth = finalLeft - startColumnLeft;
+              column.width = column.realWidth = columnWidth;
+              table.$emit('header-dragend', column.width, startLeft - startColumnLeft, column, event);
+
+              table.resizeProxyVisible = false;
+            }
+          };
         };
 
-        const handleMouseUp = () => {
-          if (this.dragging) {
-            const {
-              startColumnLeft,
-              startLeft
-            } = this.dragState;
-            const finalLeft = parseInt(resizeProxy.style.left, 10);
-            const columnWidth = finalLeft - startColumnLeft;
-            column.width = column.realWidth = columnWidth;
-            table.$emit('header-dragend', column.width, startLeft - startColumnLeft, column, event);
+        /** 调整列位置的处理 */
+        const handelSort = () => {
+          addClass(columnEl, 'table__column-drag-ing');
+          document.body.style.cursor = 'move';
+
+          this.store.commit('updateDrag', 'dragGhostState', {
+            ing: true,
+            width: columnRect.width || columnRect.right - columnRect.left,
+            height: columnRect.height || columnRect.bottom - columnRect.top,
+            top: columnRect.top,
+            left: columnRect.left,
+            text: column.label,
+            offsetX: 0,
+            offsetY: 0,
+            startEl: columnEl,
+            startIndex: index
+          });
+
+          return {
+            handleMouseMove: (event) => {
+              document.body.style.cursor = 'move';
+
+              this.store.commit('updateDrag', 'dragGhostState', {
+                offsetX: event.clientX - pointX,
+                offsetY: event.clientY - pointY
+              });
+            },
+            currentHandleMouseUp: (event) => {
+              removeClass(columnEl, 'table__column-drag-ing');
+              removeClass(this.dragGhostState.lastEl, 'table__column-drag-left table__column-drag-right');
+
+              if (this.dragGhostState.startIndex !== this.dragGhostState.lastIndex) {
+                let target = event.target;
+                // 最多循环 5 次
+                let maxMatchTime = 5;
+                while (target && target.tagName !== 'TH') {
+                  target = target.parentNode;
+                  if (maxMatchTime-- < 0) {
+                    target = null;
+                  }
+                }
+
+                if (target) {
+                  // 进行排序，处理复杂（在回调中修改）
+                  table.$emit('header-sorted', this.dragGhostState.startIndex, this.dragGhostState.lastIndex, this.columns);
+                }
+              }
+
+              this.store.commit('updateDrag', 'dragGhostState', {
+                ing: false
+              });
+            }
+          };
+        };
+
+        const { handleMouseMove, currentHandleMouseUp } = this.dragGhostState.draggingResize ? handelResize() : handelSort();
+
+        const handleMouseUp = (event) => {
+          if (this.dragGhostState.dragging) {
+            currentHandleMouseUp(event);
 
             this.store.scheduleLayout();
 
             document.body.style.cursor = '';
-            this.dragging = false;
+            this.store.commit('updateDrag', 'dragGhostState', {
+              dragging: false
+            });
             this.draggingColumn = null;
             this.dragState = {};
-
-            table.resizeProxyVisible = false;
           }
 
           document.removeEventListener('mousemove', handleMouseMove);
@@ -414,36 +489,53 @@ export default {
       }
     },
 
-    handleMouseMove(event, column) {
+    handleMouseMove(event, column, index) {
       if (column.children && column.children.length > 0) return;
-      let target = event.target;
-      while (target && target.tagName !== 'TH') {
-        target = target.parentNode;
-      }
+      const target = event.currentTarget;
 
       if (!column || !column.resizable) return;
 
-      if (!this.dragging && this.border) {
-        let rect = target.getBoundingClientRect();
+      if (this.border) {
+        if (!this.dragGhostState.draggingResize && this.dragGhostState.dragging) {
+          // 当前为调整列位置
+          this.store.commit('updateDrag', 'dragGhostState', {
+            lastEl: target,
+            lastIndex: index
+          });
 
-        const bodyStyle = document.body.style;
-        if (rect.width > 12 && rect.right - event.pageX < 8) {
-          bodyStyle.cursor = 'col-resize';
-          if (hasClass(target, 'is-sortable')) {
-            target.style.cursor = 'col-resize';
+          if (this.dragGhostState.startIndex > index) {
+            addClass(target, 'table__column-drag-left');
+          } else if (this.dragGhostState.startIndex < index) {
+            addClass(target, 'table__column-drag-right');
           }
-          this.draggingColumn = column;
-        } else if (!this.dragging) {
-          bodyStyle.cursor = '';
-          if (hasClass(target, 'is-sortable')) {
-            target.style.cursor = 'pointer';
+        } else if (!this.dragGhostState.dragging) {
+          // 用于显示调整列宽的处理
+          let rect = target.getBoundingClientRect();
+
+          const bodyStyle = document.body.style;
+          if (rect.width > 12 && rect.right - event.pageX < 8) {
+            bodyStyle.cursor = 'col-resize';
+            if (hasClass(target, 'is-sortable')) {
+              target.style.cursor = 'col-resize';
+            }
+            this.store.commit('updateDrag', 'dragGhostState', {
+              draggingResize: true
+            });
+          } else {
+            bodyStyle.cursor = '';
+            if (hasClass(target, 'is-sortable')) {
+              target.style.cursor = '';
+            }
+            this.store.commit('updateDrag', 'dragGhostState', {
+              draggingResize: false
+            });
           }
-          this.draggingColumn = null;
         }
       }
     },
 
-    handleMouseOut() {
+    handleMouseOut(event) {
+      removeClass(event.currentTarget, 'table__column-drag-left table__column-drag-right');
       if (this.$isServer) return;
       document.body.style.cursor = '';
     },
@@ -503,7 +595,6 @@ export default {
   data() {
     return {
       draggingColumn: null,
-      dragging: false,
       dragState: {}
     };
   }

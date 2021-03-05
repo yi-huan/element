@@ -67,7 +67,41 @@ export default Vue.extend({
         sortProp: null,
         sortOrder: null,
 
-        hoverRow: null
+        hoverRow: null,
+
+        // 拖动列调整宽度位置
+        dragGhostState: {
+          dragging: false,
+          /** 当前是可调整列宽 */
+          draggingResize: false,
+          /** 拖动列开始的 th 元素 */
+          startEl: null,
+          /** 拖动列开始的 index */
+          startIndex: -1,
+          /** 拖动列最后的 th 元素 */
+          lastEl: null,
+          /** 拖动列最后的 index */
+          lastIndex: -1,
+          // 用于页面显示
+          ing: false,
+          offsetX: 0,
+          offsetY: 0,
+          width: 0,
+          height: 0,
+          text: ''
+        },
+        // 拖动行的处理
+        dragRowState: {
+          ing: false,
+          startIndex: -1,
+          startEl: null,
+          lastIndex: -1,
+          lastEl: null,
+          offsetX: 0,
+          offsetY: 0,
+          width: 0,
+          height: 0
+        }
       }
     };
   },

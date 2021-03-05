@@ -41,6 +41,7 @@
         :row-class-name="rowClassName"
         :row-style="rowStyle"
         :highlight="highlightCurrentRow"
+        :sortable="sortable"
         :style="{
            width: bodyWidth
         }">
@@ -114,6 +115,7 @@
           :highlight="highlightCurrentRow"
           :row-class-name="rowClassName"
           :row-style="rowStyle"
+          :sortable="sortable"
           :style="{
             width: bodyWidth
           }">
@@ -175,6 +177,7 @@
           :row-class-name="rowClassName"
           :row-style="rowStyle"
           :highlight="highlightCurrentRow"
+          :sortable="sortable"
           :style="{
             width: bodyWidth
           }">
@@ -209,6 +212,8 @@
         height: layout.headerHeight + 'px'
       }"></div>
     <div class="el-table__column-resize-proxy" ref="resizeProxy" v-show="resizeProxyVisible"></div>
+    <div class="table__column-drag-ghost" v-show="dragGhostState.ing" :style="{width: dragGhostState.width + 'px', height: dragGhostState.height + 'px', top: (dragGhostState.top + dragGhostState.offsetY) + 'px', left: (dragGhostState.left + dragGhostState.offsetX) + 'px'}"><div class="cell">{{dragGhostState.text}}</div></div>
+    <table v-if="sortable" v-show="dragRowState.ing" cellspacing="0" cellpadding="0" border="0" class="el-table__body table__row-drag-ghost" :style="{ width: bodyWidth, top: (dragRowState.top + dragRowState.offsetY) + 'px', left: (dragRowState.left + dragRowState.offsetX) + 'px' }" ref="dragRowTable"></table>
   </div>
 </template>
 
@@ -331,7 +336,10 @@
 
       lazy: Boolean,
 
-      load: Function
+      load: Function,
+
+      // 拖动排序表格行
+      sortable: Boolean
     },
 
     components: {
@@ -581,7 +589,9 @@
         columns: 'columns',
         tableData: 'data',
         fixedColumns: 'fixedColumns',
-        rightFixedColumns: 'rightFixedColumns'
+        rightFixedColumns: 'rightFixedColumns',
+        dragGhostState: 'dragGhostState',
+        dragRowState: 'dragRowState'
       })
     },
 

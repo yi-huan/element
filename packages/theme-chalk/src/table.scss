@@ -176,6 +176,10 @@
     }
   }
 
+  th.is-leaf {
+    transition: opacity .2s;
+  }
+
   th.is-leaf, td {
     border-bottom: $--table-border;
   }
@@ -559,5 +563,68 @@
       text-align: center;
       margin-right: 3px;
     }
+  }
+}
+
+// 拖动
+.table__row-drag-ghost,
+.table__column-drag-ghost {
+  position: fixed;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(#999, .1), 0 0 #000, 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 99;
+  opacity: .7;
+  cursor: move;
+}
+
+.table__column-drag-ghost {
+  background-color: $--table-header-background-color;
+}
+
+.table__row-drag-ing,
+.table__column-drag-ing {
+  opacity: .5;
+  cursor: move;
+}
+.table__row-drag-last {
+  pointer-events: none;
+}
+.table__row-drag-ing {
+  opacity: 0;
+}
+.table__column-drag-left,
+.table__column-drag-right {
+  &::after {
+    display: block;
+    content: "";
+    position: absolute;
+    background-color: $--color-primary;
+    width: 2px;
+    bottom: 0;
+    top: 0;
+    animation: bounce 1s infinite;
+    z-index: 99;
+  }
+}
+.table__column-drag-left {
+  &::after {
+    left: 0;
+  }
+}
+.table__column-drag-right {
+  &::after {
+    right: 0;
+  }
+}
+
+@keyframes bounce {
+  0%,to {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(.8,0,1,1)
+  }
+
+  50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0,0,.2,1)
   }
 }

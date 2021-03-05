@@ -1,6 +1,6 @@
 import { arrayFindIndex } from 'yh-element/src/utils/util';
 import { getCell, getColumnByCell, getRowIdentity } from './util';
-import { getStyle, hasClass, removeClass, addClass } from 'yh-element/src/utils/dom';
+import { getStyle, setStyle, hasClass, removeClass, addClass } from 'yh-element/src/utils/dom';
 import ElCheckbox from 'yh-element/packages/checkbox';
 import ElTooltip from 'yh-element/packages/tooltip';
 import debounce from 'throttle-debounce/debounce';
@@ -26,7 +26,8 @@ export default {
     rowClassName: [String, Function],
     rowStyle: [Object, Function],
     fixed: String,
-    highlight: Boolean
+    highlight: Boolean,
+    sortable: Boolean
   },
 
   render(h) {
@@ -68,7 +69,8 @@ export default {
       columnsCount: states => states.columns.length,
       leftFixedCount: states => states.fixedColumns.length,
       rightFixedCount: states => states.rightFixedColumns.length,
-      hasExpandColumn: states => states.columns.some(({ type }) => type === 'expand')
+      hasExpandColumn: states => states.columns.some(({ type }) => type === 'expand'),
+      dragRowState: 'dragRowState'
     }),
 
     firstDefaultColumnIndex() {
@@ -278,8 +280,142 @@ export default {
       this.table.$emit('cell-mouse-leave', oldHoverState.row, oldHoverState.column, oldHoverState.cell, event);
     },
 
-    handleMouseEnter: debounce(30, function(index) {
+    handleMouseDown(event, row, index) {
+      if (!this.sortable) return;
+
+      const el = event.currentTarget;
+      const parent = el.parentNode;
+      const elRect = el.getBoundingClientRect();
+
+      this.$parent.$refs.dragRowTable.innerHTML = el.innerHTML;
+
+      const trEl = this.$parent.$refs.dragRowTable.querySelector('tr');
+      if (trEl) {
+        const rawTdsEl = el.children || el.childNodes;
+        const tdsEl = trEl.children || trEl.childNodes;
+        for (let i = 0; i < tdsEl.length; i++) {
+          const tdEl = tdsEl[i];
+          if (tdEl.nodeType === 1 && rawTdsEl[i]) {
+            tdEl.style.width = rawTdsEl[i].offsetWidth + 'px';
+          }
+        }
+      }
+
+      const pointX = event.clientX;
+      const pointY = event.clientY;
+
+      document.onselectstart = function() { return false; };
+      document.ondragstart = function() { return false; };
+
+      this.store.commit('updateDrag', 'dragRowState', {
+        ing: true,
+        parent,
+        startIndex: index,
+        startEl: el,
+        lastIndex: index,
+        width: elRect.width || elRect.right - elRect.left,
+        height: elRect.height || elRect.bottom - elRect.top,
+        top: elRect.top,
+        left: elRect.left,
+        offsetX: 0,
+        offsetY: 0
+      });
+
+      addClass(el, 'table__row-drag-ing');
+
+      const handleMouseMove = (event) => {
+        document.body.style.cursor = 'move';
+
+        this.store.commit('updateDrag', 'dragRowState', {
+          offsetX: event.clientX - pointX,
+          offsetY: event.clientY - pointY
+        });
+      };
+
+      const handleMouseUp = (event) => {
+
+        this.store.commit('updateDrag', 'dragRowState', {
+          ing: false
+        });
+
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+        document.onselectstart = null;
+        document.ondragstart = null;
+        document.body.style.cursor = '';
+
+        removeClass(el, 'table__row-drag-ing');
+        removeClass(this.dragRowState.lastEl, 'table__row-drag-last');
+
+        const startIndex = this.dragRowState.startIndex;
+        const lastIndex = this.dragRowState.lastIndex;
+        if (startIndex !== lastIndex) {
+          const data = [];
+          for (let i = 0; i < this.data.length; i++) {
+            if (i === startIndex) {
+              continue;
+            }
+            const item = this.data[i];
+            if (i === lastIndex && lastIndex < startIndex) {
+              data.push(this.data[startIndex]);
+            }
+            data.push(item);
+            if (i === lastIndex && lastIndex > startIndex) {
+              data.push(this.data[startIndex]);
+            }
+          }
+          this.store.commit('setData', data);
+          this.table.$emit('data-sort', data, startIndex, lastIndex);
+          this.setDragTdsStyle(startIndex, lastIndex, true);
+        }
+      };
+
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    },
+
+    setDragTdsStyle(startIndex, lastIndex, clear) {
+      const parent = this.dragRowState.parent;
+      const children = parent.children || parent.childNodes;
+      const min = Math.min(startIndex, lastIndex);
+      const max = Math.max(startIndex, lastIndex);
+      const height = lastIndex > startIndex ? -this.dragRowState.height : this.dragRowState.height;
+      for (let i = 0, j = 0; j < children.length; j++) {
+        const tr = children[j];
+        if (tr.nodeType === 1 && tr.tagName === 'TR') {
+          if (!clear && (i > min && i < max || (i === lastIndex))) {
+            setStyle(tr, {
+              'transform': 'translateY(' + height + 'px)',
+              '-ms-transform': 'translateY(' + height + 'px)',
+              '-webkit-transform': 'translateY(' + height + 'px)'
+            });
+          } else {
+            setStyle(tr, {
+              'transform': '',
+              '-ms-transform': '',
+              '-webkit-transform': ''
+            });
+          }
+          i++;
+        }
+      }
+    },
+
+    handleMouseEnter: debounce(30, function(index, event) {
       this.store.commit('setHoverRow', index);
+
+      if (this.dragRowState.ing) {
+        const el = event.target;
+        if (this.dragRowState.lastIndex !== index) {
+          removeClass(this.dragRowState.lastEl, 'table__row-drag-last');
+          addClass(el, 'table__row-drag-last');
+          this.store.commit('updateDrag', 'dragRowState', {
+            lastIndex: index,
+            lastEl: el
+          });
+          this.setDragTdsStyle(this.dragRowState.startIndex, index);
+        }
+      }
     }),
 
     handleMouseLeave: debounce(30, function() {
@@ -333,7 +469,8 @@ export default {
         on-dblclick={ ($event) => this.handleDoubleClick($event, row) }
         on-click={ ($event) => this.handleClick($event, row) }
         on-contextmenu={ ($event) => this.handleContextMenu($event, row) }
-        on-mouseenter={ _ => this.handleMouseEnter($index) }
+        on-mousedown={ ($event) => this.handleMouseDown($event, row, $index) }
+        on-mouseenter={ ($event) => this.handleMouseEnter($index, $event) }
         on-mouseleave={ this.handleMouseLeave }>
         {
           columns.map((column, cellIndex) => {
