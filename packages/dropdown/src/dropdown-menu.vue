@@ -1,8 +1,8 @@
 <template>
   <transition name="el-zoom-in-top" @after-leave="doDestroy">
-    <ul class="el-dropdown-menu el-popper" :class="[size && `el-dropdown-menu--${size}`]" v-show="showPopper">
+    <div class="el-dropdown-menu el-popper" :class="[size && `el-dropdown-menu--${size}`]" v-show="showPopper">
       <slot></slot>
-    </ul>
+    </div>
   </transition>
 </template>
 <script>

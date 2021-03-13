@@ -1,5 +1,5 @@
 <template>
-  <li
+  <div
     class="el-dropdown-menu__item"
     :class="{
       'is-disabled': disabled,
@@ -11,7 +11,7 @@
   >
     <i :class="icon" v-if="icon"></i>
     <slot></slot>
-  </li>
+  </div>
 </template>
 <script>
   import Emitter from 'yh-element/src/mixins/emitter';

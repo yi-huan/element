@@ -37,7 +37,9 @@
       disabled: {
         type: Boolean,
         default: false
-      }
+      },
+      tagClass: String,
+      tagType: String
     },
 
     data() {

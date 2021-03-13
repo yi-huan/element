@@ -241,6 +241,78 @@
 ```
 :::
 
+### 自定义选择项的标签类型
+
+可根据选择项显示不同的 Tag 类型
+
+:::demo 为`el-select`设置`multiple`属性即可启用多选，且设置`options`的属性`tag-type`。或者设置`tag-class`为数据项对应的样式名称，以自定义样式
+```html
+<template>
+  <el-select v-model="value1" multiple placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value"
+      :tag-type="item.tag"
+      :tag-class="item.className">
+    </el-option>
+  </el-select>
+
+  <el-select
+    v-model="value2"
+    multiple
+    collapse-tags
+    style="margin-left: 20px;"
+    placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        options: [{
+          value: '选项1',
+          label: '黄金糕',
+          tag: 'success',
+          className: 's-success'
+        }, {
+          value: '选项2',
+          label: '双皮奶',
+          tag: 'warning',
+          className: 's-warning'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎',
+          tag: 'danger',
+          className: 's-danger'
+        }, {
+          value: '选项4',
+          label: '龙须面',
+          tag: 'light',
+          className: 's-light'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭',
+          tag: 'info',
+          className: 's-info'
+        }],
+        value1: [],
+        value2: []
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### 自定义模板
 
 可以自定义备选项
