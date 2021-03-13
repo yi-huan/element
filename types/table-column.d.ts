@@ -76,6 +76,9 @@ export declare class ElTableColumn extends ElementUIComponent {
   /** Whether column width can be resized. Works when border of `el-table` is `true` */
   resizable: boolean
 
+  /** 表头是否可以拖动换位置 */
+  transposable: boolean
+
   /** Function that formats content */
   formatter: (row: object, column: TableColumn) => any
 

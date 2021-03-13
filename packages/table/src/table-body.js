@@ -366,8 +366,9 @@ export default {
           }
           this.store.commit('setData', data);
           this.table.$emit('data-sort', data, startIndex, lastIndex);
-          this.setDragTdsStyle(startIndex, lastIndex, true);
         }
+        // 无论是否移动都清除
+        this.setDragTdsStyle(startIndex, lastIndex, true);
       };
 
       document.addEventListener('mousemove', handleMouseMove);

@@ -275,6 +275,10 @@ export default {
         classes.push('is-sortable');
       }
 
+      if (this.border && column.transposable) {
+        classes.push('is-transposable');
+      }
+
       const headerCellClassName = this.table.headerCellClassName;
       if (typeof headerCellClassName === 'string') {
         classes.push(headerCellClassName);
@@ -345,7 +349,7 @@ export default {
       if (this.$isServer) return;
       if (column.children && column.children.length > 0) return;
       /* istanbul ignore if */
-      if (this.border) {
+      if (this.border && (column.transposable || this.dragGhostState.draggingResize)) {
         this.store.commit('updateDrag', 'dragGhostState', {
           dragging: true
         });
@@ -405,11 +409,7 @@ export default {
 
         /** 调整列位置的处理 */
         const handelSort = () => {
-          addClass(columnEl, 'table__column-drag-ing');
-          document.body.style.cursor = 'move';
-
           this.store.commit('updateDrag', 'dragGhostState', {
-            ing: true,
             width: columnRect.width || columnRect.right - columnRect.left,
             height: columnRect.height || columnRect.bottom - columnRect.top,
             top: columnRect.top,
@@ -423,12 +423,18 @@ export default {
 
           return {
             handleMouseMove: (event) => {
-              document.body.style.cursor = 'move';
-
-              this.store.commit('updateDrag', 'dragGhostState', {
+              const updateData = {
                 offsetX: event.clientX - pointX,
                 offsetY: event.clientY - pointY
-              });
+              };
+
+              if (!this.dragGhostState.ing) {
+                document.body.style.cursor = 'move';
+                addClass(columnEl, 'table__column-drag-ing');
+              }
+              updateData.ing = true;
+
+              this.store.commit('updateDrag', 'dragGhostState', updateData);
             },
             currentHandleMouseUp: (event) => {
               removeClass(columnEl, 'table__column-drag-ing');
@@ -445,9 +451,9 @@ export default {
                   }
                 }
 
-                if (target) {
+                if (target && hasClass(target, 'is-transposable')) {
                   // 进行排序，处理复杂（在回调中修改）
-                  table.$emit('header-sorted', this.dragGhostState.startIndex, this.dragGhostState.lastIndex, this.columns);
+                  table.$emit('header-transposed', this.dragGhostState.startIndex, this.dragGhostState.lastIndex, this.columns);
                 }
               }
 
@@ -493,10 +499,10 @@ export default {
       if (column.children && column.children.length > 0) return;
       const target = event.currentTarget;
 
-      if (!column || !column.resizable) return;
+      if (!column) return;
 
       if (this.border) {
-        if (!this.dragGhostState.draggingResize && this.dragGhostState.dragging) {
+        if (column.transposable && !this.dragGhostState.draggingResize && this.dragGhostState.dragging) {
           // 当前为调整列位置
           this.store.commit('updateDrag', 'dragGhostState', {
             lastEl: target,
@@ -508,7 +514,7 @@ export default {
           } else if (this.dragGhostState.startIndex < index) {
             addClass(target, 'table__column-drag-right');
           }
-        } else if (!this.dragGhostState.dragging) {
+        } else if (column.resizable && !this.dragGhostState.dragging) {
           // 用于显示调整列宽的处理
           let rect = target.getBoundingClientRect();
 

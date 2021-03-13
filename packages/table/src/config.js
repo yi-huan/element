@@ -43,7 +43,8 @@ export const cellForced = {
         on-input={ () => { store.commit('rowSelectedChanged', row); } } />;
     },
     sortable: false,
-    resizable: false
+    resizable: false,
+    transposable: false
   },
   index: {
     renderHeader: function(h, { column }) {
@@ -61,7 +62,8 @@ export const cellForced = {
 
       return <div>{ i }</div>;
     },
-    sortable: false
+    sortable: false,
+    transposable: false
   },
   expand: {
     renderHeader: function(h, { column }) {
@@ -83,6 +85,7 @@ export const cellForced = {
     },
     sortable: false,
     resizable: false,
+    transposable: false,
     className: 'el-table__expand-column'
   }
 };

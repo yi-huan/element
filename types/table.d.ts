@@ -54,6 +54,9 @@ export declare class ElTable extends ElementUIComponent {
   /** Whether table has vertical border */
   border: boolean
 
+  /** 是否可以拖动更换行位置 */
+  sortable: boolean
+
   /** Whether width of column automatically fits its container */
   fit: boolean
 

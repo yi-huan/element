@@ -30,6 +30,10 @@ export default {
       type: Boolean,
       default: true
     },
+    transposable: {
+      type: Boolean,
+      default: true
+    },
     columnKey: String,
     align: String,
     headerAlign: String,
@@ -278,7 +282,7 @@ export default {
       index: this.index
     };
 
-    const basicProps = ['columnKey', 'label', 'className', 'labelClassName', 'type', 'renderHeader', 'formatter', 'fixed', 'resizable'];
+    const basicProps = ['columnKey', 'label', 'className', 'labelClassName', 'type', 'renderHeader', 'formatter', 'fixed', 'resizable', 'transposable'];
     const sortProps = ['sortMethod', 'sortBy', 'sortOrders'];
     const selectProps = ['selectable', 'reserveSelection'];
     const filterProps = ['filterMethod', 'filters', 'filterMultiple', 'filterOpened', 'filteredValue', 'filterPlacement'];
