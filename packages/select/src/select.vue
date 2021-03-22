@@ -24,7 +24,7 @@
           :closable="false"
           :size="collapseTagSize"
           :type="selected[0].tagType || 'info'"
-          :class="item.tagClass"
+          :class="selected[0].tagClass"
           disable-transitions>
           <span class="el-select__tags-text">+ {{ selected.length - 1 }}</span>
         </el-tag>
