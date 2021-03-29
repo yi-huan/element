@@ -39,6 +39,10 @@
   }
 }
 
+@include b(select-dropdown-shown) {
+  position: relative;
+}
+
 @include b(select-dropdown__empty) {
   padding: $--select-dropdown-empty-padding;
   margin: 0;

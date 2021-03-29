@@ -98,18 +98,20 @@
         <slot name="prefix"></slot>
       </template>
       <template slot="suffix">
-        <i v-show="!showClose" :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"></i>
+        <i v-show="!shownPopper && !showClose" :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]"></i>
         <i v-if="showClose" class="el-select__caret el-input__icon el-icon-circle-close" @click="handleClearClick"></i>
       </template>
     </el-input>
+    <slot name="after">1111</slot>
     <transition
       name="el-zoom-in-top"
       @before-enter="handleMenuEnter"
       @after-leave="doDestroy">
-      <el-select-menu
+      <component
+        :is="optionsComponentName"
         ref="popper"
         :append-to-body="popperAppendToBody"
-        v-show="visible && emptyText !== false">
+        v-show="(shownPopper || visible) && emptyText !== false">
         <el-scrollbar
           tag="ul"
           wrap-class="el-select-dropdown__wrap"
@@ -130,7 +132,7 @@
             {{ emptyText }}
           </p>
         </template>
-      </el-select-menu>
+      </component>
     </transition>
   </div>
 </template>
@@ -141,6 +143,7 @@
   import Locale from 'yh-element/src/mixins/locale';
   import ElInput from 'yh-element/packages/input';
   import ElSelectMenu from './select-dropdown.vue';
+  import ElSelectOptions from './select-options.vue';
   import ElOption from './option.vue';
   import ElTag from 'yh-element/packages/tag';
   import ElScrollbar from 'yh-element/packages/scrollbar';
@@ -239,12 +242,17 @@
       },
       propPlaceholder() {
         return typeof this.placeholder !== 'undefined' ? this.placeholder : this.t('el.select.placeholder');
+      },
+      optionsComponentName() {
+        if (this.shownPopper) return 'el-select-options';
+        return 'el-select-menu';
       }
     },
 
     components: {
       ElInput,
       ElSelectMenu,
+      ElSelectOptions,
       ElOption,
       ElTag,
       ElScrollbar
@@ -301,6 +309,7 @@
         default: 'value'
       },
       collapseTags: Boolean,
+      shownPopper: Boolean,
       popperAppendToBody: {
         type: Boolean,
         default: true
@@ -602,7 +611,7 @@
       },
 
       doDestroy() {
-        this.$refs.popper && this.$refs.popper.doDestroy();
+        !this.shownPopper && this.$refs.popper && this.$refs.popper.doDestroy();
       },
 
       handleClose() {

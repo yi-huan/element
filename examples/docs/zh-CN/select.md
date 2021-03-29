@@ -591,6 +591,68 @@
 如果 Select 的绑定值为对象类型，请务必指定 `value-key` 作为它的唯一性标识。
 :::
 
+### 基础用法
+
+一直显示下拉列表
+:::demo 设置 `shown-popper` 为 true
+```html
+<template>
+  <el-select v-model="value" placeholder="请选择" shown-popper>
+    <template #after>
+      <el-button>按钮</el-button>
+    </template>
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }, {
+          value: '选项6',
+          label: '黄金糕1'
+        }, {
+          value: '选项7',
+          label: '双皮奶1'
+        }, {
+          value: '选项8',
+          label: '蚵仔煎1'
+        }, {
+          value: '选项9',
+          label: '龙须面1'
+        }, {
+          value: '选项10',
+          label: '北京烤鸭1'
+        }],
+        value: ''
+      }
+    }
+  }
+</script>
+```
+:::
+
 ### Select Attributes
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
 |---------- |-------------- |---------- |--------------------------------  |-------- |
