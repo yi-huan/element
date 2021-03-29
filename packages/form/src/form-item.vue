@@ -10,13 +10,14 @@
     sizeClass ? 'el-form-item--' + sizeClass : ''
   ]">
     <label-wrap
+      :class="labelWrapClassName || form.labelWrapClassName"
       :is-auto-width="labelStyle && labelStyle.width === 'auto'"
       :update-all="form.labelWidth === 'auto'">
-      <label :for="labelFor" class="el-form-item__label" :style="labelStyle" v-if="label || $slots.label">
+      <label :for="labelFor" class="el-form-item__label" :class="labelClassName || form.labelClassName" :style="labelStyle" v-if="label || $slots.label">
         <slot name="label">{{label + form.labelSuffix}}</slot>
       </label>
     </label-wrap>
-    <div class="el-form-item__content" :style="contentStyle">
+    <div class="el-form-item__content" :class="contentClassName || form.contentClassName" :style="contentStyle">
       <slot></slot>
       <transition name="el-zoom-in-top">
         <slot
@@ -32,6 +33,20 @@
             }"
           >
             {{validateMessage}}
+          </div>
+        </slot>
+        <slot
+         v-else-if="showTip && tip"
+         name="tip"
+         :prop="prop">
+         <div
+          class="el-form-item__tip"
+          :class="{
+            'el-form-item__tip--inline': typeof inlineMessage === 'boolean'
+              ? inlineMessage
+              : (elForm && elForm.inlineMessage || false)
+          }">
+            {{tip}}
           </div>
         </slot>
       </transition>
@@ -62,6 +77,9 @@
     props: {
       label: String,
       labelWidth: String,
+      labelClassName: String,
+      labelWrapClassName: String,
+      contentClassName: String,
       prop: String,
       required: {
         type: Boolean,
@@ -79,6 +97,11 @@
         type: Boolean,
         default: true
       },
+      showTip: {
+        type: Boolean,
+        default: true
+      },
+      tip: String,
       size: String
     },
     components: {
@@ -282,8 +305,12 @@
           }
         }).map(rule => objectAssign({}, rule));
       },
+      onFieldFocus() {
+        this.elForm && this.elForm.$emit('focus', this.prop, this.validateMessage || null);
+      },
       onFieldBlur() {
         this.validate('blur');
+        this.elForm && this.elForm.$emit('blur', this.prop, this.validateMessage || null);
       },
       onFieldChange() {
         if (this.validateDisabled) {
@@ -302,6 +329,9 @@
         if (rules.length || this.required !== undefined) {
           this.$on('el.form.blur', this.onFieldBlur);
           this.$on('el.form.change', this.onFieldChange);
+        }
+        if (this.elForm && this.elForm.listenFocus) {
+          this.$on('el.form.focus', this.onFieldFocus);
         }
       },
       removeValidateEvents() {

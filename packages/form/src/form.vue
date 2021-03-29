@@ -25,10 +25,14 @@
       rules: Object,
       labelPosition: String,
       labelWidth: String,
+      labelClassName: String,
+      labelWrapClassName: String,
+      contentClassName: String,
       labelSuffix: {
         type: String,
         default: ''
       },
+      listenFocus: Boolean,
       inline: Boolean,
       inlineMessage: Boolean,
       statusIcon: Boolean,

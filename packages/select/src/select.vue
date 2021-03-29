@@ -574,6 +574,7 @@
             }
           }
           this.$emit('focus', event);
+          this.dispatch('ElFormItem', 'el.form.focus', this.value);
         } else {
           this.softFocus = false;
         }
@@ -590,6 +591,7 @@
             this.isSilentBlur = false;
           } else {
             this.$emit('blur', event);
+            this.dispatch('ElFormItem', 'el.form.blur', this.value);
           }
         }, 50);
         this.softFocus = false;

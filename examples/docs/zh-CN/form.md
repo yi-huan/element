@@ -580,6 +580,154 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 ```
 :::
 
+### 表单控件元素 focus，blur， label-class-name，tip
+
+:::demo 在 `form` 处加上 `listen-focus` 则监听表单控件 `focus`
+```html
+<el-form
+  :model="ruleForm"
+  :rules="rules"
+  ref="ruleForm"
+  label-width="100px"
+  label-class-name="demo-label-100"
+  content-class-name="demo-content"
+  class="demo-ruleForm"
+  listen-focus
+  @focus="onFocus"
+  @blur="onBlur">
+  <el-form-item label="活动名称" prop="name" tip="长度在 3 到 5 个字符">
+    <el-input v-model="ruleForm.name"></el-input>
+  </el-form-item>
+  <el-form-item label="活动区域" prop="region">
+    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+      <el-option label="区域一" value="shanghai"></el-option>
+      <el-option label="区域二" value="beijing"></el-option>
+    </el-select>
+  </el-form-item>
+  <el-form-item label="活动时间" required>
+    <el-col :span="11">
+      <el-form-item prop="date1">
+        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+      </el-form-item>
+    </el-col>
+    <el-col class="line" :span="2">-</el-col>
+    <el-col :span="11">
+      <el-form-item prop="date2">
+        <el-time-picker placeholder="选择时间" v-model="ruleForm.date2" style="width: 100%;"></el-time-picker>
+      </el-form-item>
+    </el-col>
+  </el-form-item>
+  <el-form-item label="活动时间2" prop="data3" required>
+    <el-date-picker
+      v-model="ruleForm.date3"
+      type="datetimerange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期">
+    </el-date-picker>
+  </el-form-item>
+  <el-form-item label="即时配送" prop="delivery">
+    <el-switch v-model="ruleForm.delivery"></el-switch>
+  </el-form-item>
+  <el-form-item label="活动性质" prop="type">
+    <el-checkbox-group v-model="ruleForm.type">
+      <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
+      <el-checkbox label="地推活动" name="type"></el-checkbox>
+      <el-checkbox label="线下主题活动" name="type"></el-checkbox>
+      <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
+    </el-checkbox-group>
+  </el-form-item>
+  <el-form-item label="特殊资源" prop="resource">
+    <el-radio-group v-model="ruleForm.resource">
+      <el-radio label="线上品牌商赞助"></el-radio>
+      <el-radio label="线下场地免费"></el-radio>
+    </el-radio-group>
+  </el-form-item>
+  <el-form-item label="活动形式" prop="desc">
+    <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+    <el-button @click="resetForm('ruleForm')">重置</el-button>
+  </el-form-item>
+</el-form>
+
+<script>
+  export default {
+    data() {
+      return {
+        ruleForm: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          date3: [],
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        rules: {
+          name: [
+            { required: true, message: '请输入活动名称', trigger: 'blur' },
+            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          region: [
+            { required: true, message: '请选择活动区域', trigger: 'change' }
+          ],
+          date1: [
+            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+          ],
+          date2: [
+            { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+          ],
+          date3: [
+            { type: 'array', required: true, message: '请选择日期时间', trigger: 'change' }
+          ],
+          type: [
+            { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
+          ],
+          resource: [
+            { required: true, message: '请选择活动资源', trigger: 'change' }
+          ],
+          desc: [
+            { required: true, message: '请填写活动形式', trigger: 'blur' }
+          ]
+        }
+      };
+    },
+    methods: {
+      onFocus (propName, errorMessage) {
+        console.log('focus', propName, errorMessage);
+      },
+      onBlur (propName, errorMessage) {
+        console.log('blur', propName, errorMessage);
+      },
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
+  }
+</script>
+```
+:::
+
+:::tip
+`focus` 事件仅支持 `input`, `select`, `el-date-picker`, `el-time-picker`。
+
+嵌套在 `el-form-item` 中的 `el-form-item` 不会继承 `el-form` 的 `label-class-name`, `label-wrap-class-name`, `content-class-name`。如果需要可以为其单独设置属性。
+:::
+
 ### Form Attributes
 
 | 参数      | 说明          | 类型      | 可选值                           | 默认值  |
@@ -589,6 +737,9 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 | inline    | 行内表单模式 | boolean | — | false |
 | label-position | 表单域标签的位置，如果值为 left 或者 right 时，则需要设置 `label-width` | string |  right/left/top            | right |
 | label-width | 表单域标签的宽度，例如 '50px'。作为 Form 直接子元素的 form-item 会继承该值。支持 `auto`。 | string | — | — |
+| label-class-name | 表单域标签的的样式名。Form 的直接子元素的 form-item 会继承该值。 | string |       —       | — |
+| label-wrap-class-name | 表单域标签的的包裹层的样式名。Form 的直接子元素的 form-item 会继承该值。 | string |       —       | — |
+| content-class-name | 表单域控件的包裹层的样式名。Form 的直接子元素的 form-item 会继承该值。 | string |       —       | — |
 | label-suffix | 表单域标签的后缀 | string | — | — |
 | hide-required-asterisk | 是否显示必填字段的标签旁边的红色星号 | boolean | — | false |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
@@ -597,6 +748,7 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 | validate-on-rule-change  | 是否在 `rules` 属性改变后立即触发一次验证 | boolean | — | true |
 | size  | 用于控制该表单内组件的尺寸 | string | medium / small / mini | — |
 | disabled | 是否禁用该表单内的所有组件。若设置为 true，则表单内组件上的 disabled 属性不再生效 | boolean | — | false |
+| listen-focus | 是否监听表单内组件上的 focus 属性 | boolean | — | false |
 
 ### Form Methods
 
@@ -610,6 +762,8 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 ### Form Events
 | 事件名称 | 说明    | 回调参数  |
 |--------- |-------- |---------- |
+| focus | （需要设置 form 的 listen-focus 为 true）任一表单项获得 focus 后触发 | 被校验的表单项 prop 值，错误消息（如果存在） |
+| blur | （需要设置校验 rules 或者 required）任一表单项获得 blur 后触发 | 被校验的表单项 prop 值，错误消息（如果存在） |
 | validate | 任一表单项被校验后触发 | 被校验的表单项 prop 值，校验是否通过，错误消息（如果存在） |
 
 ### Form-Item Attributes
@@ -619,11 +773,16 @@ W3C 标准中有如下[规定](https://www.w3.org/MarkUp/html-spec/html-spec_8.h
 | prop    | 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的 | string    | 传入 Form 组件的 `model` 中的字段 | — |
 | label | 标签文本 | string | — | — |
 | label-width | 表单域标签的的宽度，例如 '50px'。支持 `auto`。 | string |       —       | — |
+| label-class-name | 表单域标签的的样式名。 | string |       —       | — |
+| label-wrap-class-name | 表单域标签的的包裹层的样式名。 | string |       —       | — |
+| content-class-name | 表单域控件的包裹层的样式名。 | string |       —       | — |
 | required | 是否必填，如不设置，则会根据校验规则自动生成 | boolean | — | false |
 | rules    | 表单验证规则 | object | — | — |
 | error    | 表单域验证错误信息, 设置该值会使表单验证状态变为`error`，并显示该错误信息 | string | — | — |
 | show-message  | 是否显示校验错误信息 | boolean | — | true |
 | inline-message  | 以行内形式展示校验信息 | boolean | — | false |
+| tip  | 在表单项后的提示信息（有 error 信息则会隐藏） | string | — | — |
+| show-tip  | 是否显示提示信息 | boolean | — | true |
 | size  | 用于控制该表单域下组件的尺寸 | string | medium / small / mini | - |
 
 ### Form-Item Slot

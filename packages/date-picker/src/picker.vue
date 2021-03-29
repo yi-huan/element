@@ -731,6 +731,9 @@ export default {
         this.pickerVisible = true;
       }
       this.$emit('focus', this);
+      if (this.validateEvent) {
+        this.dispatch('ElFormItem', 'el.form.focus');
+      }
     },
 
     handleKeydown(event) {

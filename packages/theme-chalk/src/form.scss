@@ -65,7 +65,8 @@
     &.el-form-item {
       margin-bottom: 18px;
     }
-    .el-form-item__error {
+    .el-form-item__error,
+    .el-form-item__tip {
       padding-top: 2px;
     }
   }
@@ -79,7 +80,8 @@
     &.el-form-item {
       margin-bottom: 18px;
     }
-    .el-form-item__error {
+    .el-form-item__error,
+    .el-form-item__tip {
       padding-top: 1px;
     }
   }
@@ -114,20 +116,29 @@
   }
   @include e(error) {
     color: $--color-danger;
+  }
+
+  @include e(tip) {
+    color: $--color-text-secondary;
+  }
+
+  .el-form-item__error,
+  .el-form-item__tip {
     font-size: 12px;
     line-height: 1;
     padding-top: 4px;
     position: absolute;
     top: 100%;
     left: 0;
+  }
 
-    @include m(inline) {
-      position: relative;
-      top: auto;
-      left: auto;
-      display: inline-block;
-      margin-left: 10px;
-    }
+  .el-form-item__error--inline,
+  .el-form-item__tip--inline {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: inline-block;
+    margin-left: 10px;
   }
 
   @include when(required) {

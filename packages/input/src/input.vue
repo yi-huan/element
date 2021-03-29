@@ -336,6 +336,9 @@
       handleFocus(event) {
         this.focused = true;
         this.$emit('focus', event);
+        if (this.validateEvent) {
+          this.dispatch('ElFormItem', 'el.form.focus', [this.value]);
+        }
       },
       handleCompositionStart() {
         this.isComposing = true;
