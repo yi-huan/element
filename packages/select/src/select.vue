@@ -102,7 +102,7 @@
         <i v-if="showClose" class="el-select__caret el-input__icon el-icon-circle-close" @click="handleClearClick"></i>
       </template>
     </el-input>
-    <slot name="after">1111</slot>
+    <slot name="after"></slot>
     <transition
       name="el-zoom-in-top"
       @before-enter="handleMenuEnter"
