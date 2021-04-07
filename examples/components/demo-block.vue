@@ -8,7 +8,7 @@
       <slot name="source"></slot>
     </div>
     <div class="meta" ref="meta">
-      <div class="description" v-if="$slots.default">
+      <div class="description" v-if="$scopedSlots.default">
         <slot></slot>
       </div>
       <div class="highlight">
@@ -302,7 +302,7 @@
     },
 
     created() {
-      const highlight = this.$slots.highlight;
+      const highlight = this.$scopedSlots.highlight;
       if (highlight && highlight[0]) {
         let code = '';
         let cur = highlight[0];

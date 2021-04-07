@@ -20,16 +20,16 @@
       @keydown.enter.native="handleKeyEnter"
       @keydown.native.tab="close"
     >
-      <template slot="prepend" v-if="$slots.prepend">
+      <template slot="prepend" v-if="$scopedSlots.prepend">
         <slot name="prepend"></slot>
       </template>
-      <template slot="append" v-if="$slots.append">
+      <template slot="append" v-if="$scopedSlots.append">
         <slot name="append"></slot>
       </template>
-      <template slot="prefix" v-if="$slots.prefix">
+      <template slot="prefix" v-if="$scopedSlots.prefix">
         <slot name="prefix"></slot>
       </template>
-      <template slot="suffix" v-if="$slots.suffix">
+      <template slot="suffix" v-if="$scopedSlots.suffix">
         <slot name="suffix"></slot>
       </template>
     </el-input>

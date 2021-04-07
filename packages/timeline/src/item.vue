@@ -2,7 +2,7 @@
   <li class="el-timeline-item">
     <div class="el-timeline-item__tail"></div>
 
-    <div v-if="!$slots.dot"
+    <div v-if="!$scopedSlots.dot"
       class="el-timeline-item__node"
       :class="[
         `el-timeline-item__node--${size || ''}`,
@@ -17,7 +17,7 @@
         :class="icon"
       ></i>
     </div>
-    <div v-if="$slots.dot" class="el-timeline-item__dot">
+    <div v-if="$scopedSlots.dot" class="el-timeline-item__dot">
       <slot name="dot"></slot>
     </div>
 

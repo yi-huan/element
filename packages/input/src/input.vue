@@ -5,11 +5,11 @@
     {
       'is-disabled': inputDisabled,
       'is-exceed': inputExceed,
-      'el-input-group': $slots.prepend || $slots.append,
-      'el-input-group--append': $slots.append,
-      'el-input-group--prepend': $slots.prepend,
-      'el-input--prefix': $slots.prefix || prefixIcon,
-      'el-input--suffix': $slots.suffix || suffixIcon || clearable || showPassword
+      'el-input-group': $scopedSlots.prepend || $scopedSlots.append,
+      'el-input-group--append': $scopedSlots.append,
+      'el-input-group--prepend': $scopedSlots.prepend,
+      'el-input--prefix': $scopedSlots.prefix || prefixIcon,
+      'el-input--suffix': $scopedSlots.suffix || suffixIcon || clearable || showPassword
     }
     ]"
     @mouseenter="hovering = true"
@@ -17,7 +17,7 @@
   >
     <template v-if="type !== 'textarea'">
       <!-- 前置元素 -->
-      <div class="el-input-group__prepend" v-if="$slots.prepend">
+      <div class="el-input-group__prepend" v-if="$scopedSlots.prepend">
         <slot name="prepend"></slot>
       </div>
       <input
@@ -40,7 +40,7 @@
         :aria-label="label"
       >
       <!-- 前置内容 -->
-      <span class="el-input__prefix" v-if="$slots.prefix || prefixIcon">
+      <span class="el-input__prefix" v-if="$scopedSlots.prefix || prefixIcon">
         <slot name="prefix"></slot>
         <i class="el-input__icon"
            v-if="prefixIcon"
@@ -80,7 +80,7 @@
         </i>
       </span>
       <!-- 后置元素 -->
-      <div class="el-input-group__append" v-if="$slots.append">
+      <div class="el-input-group__append" v-if="$scopedSlots.append">
         <slot name="append"></slot>
       </div>
     </template>
@@ -389,7 +389,7 @@
         };
 
         const pendant = pendantMap[place];
-        if (this.$slots[pendant]) {
+        if (this.$scopedSlots[pendant]) {
           el.style.transform = `translateX(${place === 'suffix' ? '-' : ''}${this.$el.querySelector(`.el-input-group__${pendant}`).offsetWidth}px)`;
         } else {
           el.removeAttribute('style');
@@ -412,7 +412,7 @@
         return this.$refs.input || this.$refs.textarea;
       },
       getSuffixVisible() {
-        return this.$slots.suffix ||
+        return this.$scopedSlots.suffix ||
           this.suffixIcon ||
           this.showClear ||
           this.showPassword ||

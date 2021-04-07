@@ -30,7 +30,7 @@
           </button>
         </div>
         <div class="el-dialog__body" v-if="rendered"><slot></slot></div>
-        <div class="el-dialog__footer" v-if="$slots.footer">
+        <div class="el-dialog__footer" v-if="$scopedSlots.footer">
           <slot name="footer"></slot>
         </div>
       </div>

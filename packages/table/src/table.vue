@@ -57,7 +57,7 @@
         </span>
       </div>
       <div
-        v-if="$slots.append"
+        v-if="$scopedSlots.append"
         class="el-table__append-wrapper"
         ref="appendWrapper">
         <slot name="append"></slot>
@@ -122,7 +122,7 @@
           }">
         </table-body>
         <div
-          v-if="$slots.append"
+          v-if="$scopedSlots.append"
           class="el-table__append-gutter"
           :style="{ height: layout.appendHeight + 'px'}"></div>
       </div>
@@ -184,7 +184,7 @@
           }">
         </table-body>
          <div
-          v-if="$slots.append"
+          v-if="$scopedSlots.append"
           class="el-table__append-gutter"
           :style="{ height: layout.appendHeight + 'px' }"></div>
       </div>

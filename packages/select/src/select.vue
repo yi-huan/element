@@ -94,7 +94,7 @@
       @paste.native="debouncedOnInputChange"
       @mouseenter.native="inputHovering = true"
       @mouseleave.native="inputHovering = false">
-      <template slot="prefix" v-if="$slots.prefix">
+      <template slot="prefix" v-if="$scopedSlots.prefix">
         <slot name="prefix"></slot>
       </template>
       <template slot="suffix">
@@ -127,7 +127,7 @@
           <slot></slot>
         </el-scrollbar>
         <template v-if="emptyText && (!allowCreate || loading || (allowCreate && options.length === 0 ))">
-          <slot name="empty" v-if="$slots.empty"></slot>
+          <slot name="empty" v-if="$scopedSlots.empty"></slot>
           <p class="el-select-dropdown__empty" v-else>
             {{ emptyText }}
           </p>

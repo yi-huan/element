@@ -36,7 +36,7 @@
       @blur="focus = false">
 
     <span class="el-checkbox-button__inner"
-      v-if="$slots.default || label"
+      v-if="$scopedSlots.default || label"
       :style="isChecked ? activeStyle : null">
       <slot>{{label}}</slot>
     </span>
