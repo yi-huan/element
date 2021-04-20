@@ -1941,6 +1941,7 @@
 | load        | 加载子节点数据的函数，lazy 为 true 时生效，函数第二个参数包含了节点的层级信息 | Function(row, treeNode, resolve) | — | — |
 | tree-props  | 渲染嵌套数据的配置选项 | Object | — | { hasChildren: 'hasChildren', children: 'children' } |
 | sortable    | 是否可以拖动排序行 | Boolean | — | — |
+| not-sort-data  | 拖动排序行是否不更改数据 | Boolean | — | — |
 
 ### Table Events
 | 事件名 | 说明 | 参数 |
@@ -1963,6 +1964,7 @@
 | header-dragend | 当拖动表头改变了列的宽度的时候会触发该事件 | newWidth, oldWidth, column, event |
 | header-transposed | 当拖动表头改变了列的位置的时候会触发该事件（实际未改变位置） | startIndex, lastIndex, column |
 | expand-change  | 当用户对某一行展开或者关闭的时候会触发该事件（展开行时，回调的第二个参数为 expandedRows；树形表格时第二参数为 expanded） | row, (expandedRows \| expanded) |
+| data-sort  | 拖动行结束时执行的函数，data 在 not-sort-data 不为 true 时返回  | startIndex, lastIndex, data |
 
 ### Table Methods
 | 方法名 | 说明 | 参数 |

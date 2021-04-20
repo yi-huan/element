@@ -27,7 +27,8 @@ export default {
     rowStyle: [Object, Function],
     fixed: String,
     highlight: Boolean,
-    sortable: Boolean
+    sortable: Boolean,
+    notSortData: Boolean
   },
 
   render(h) {
@@ -281,7 +282,7 @@ export default {
     },
 
     handleMouseDown(event, row, index) {
-      if (!this.sortable) return;
+      if (!this.sortable || event.button !== 0) return;
 
       const el = event.currentTarget;
       const parent = el.parentNode;
@@ -308,7 +309,6 @@ export default {
       document.ondragstart = function() { return false; };
 
       this.store.commit('updateDrag', 'dragRowState', {
-        ing: true,
         parent,
         startIndex: index,
         startEl: el,
@@ -321,12 +321,12 @@ export default {
         offsetY: 0
       });
 
-      addClass(el, 'table__row-drag-ing');
-
       const handleMouseMove = (event) => {
-        document.body.style.cursor = 'move';
+        // document.body.style.cursor = 'move';
+        addClass(el, 'table__row-drag-ing');
 
         this.store.commit('updateDrag', 'dragRowState', {
+          ing: true,
           offsetX: event.clientX - pointX,
           offsetY: event.clientY - pointY
         });
@@ -342,7 +342,7 @@ export default {
         document.removeEventListener('mouseup', handleMouseUp);
         document.onselectstart = null;
         document.ondragstart = null;
-        document.body.style.cursor = '';
+        // document.body.style.cursor = '';
 
         removeClass(el, 'table__row-drag-ing');
         removeClass(this.dragRowState.lastEl, 'table__row-drag-last');
@@ -350,22 +350,26 @@ export default {
         const startIndex = this.dragRowState.startIndex;
         const lastIndex = this.dragRowState.lastIndex;
         if (startIndex !== lastIndex) {
-          const data = [];
-          for (let i = 0; i < this.data.length; i++) {
-            if (i === startIndex) {
-              continue;
+          let sortData;
+          if (!this.notSortData) {
+            const data = [];
+            for (let i = 0; i < this.data.length; i++) {
+              if (i === startIndex) {
+                continue;
+              }
+              const item = this.data[i];
+              if (i === lastIndex && lastIndex < startIndex) {
+                data.push(this.data[startIndex]);
+              }
+              data.push(item);
+              if (i === lastIndex && lastIndex > startIndex) {
+                data.push(this.data[startIndex]);
+              }
             }
-            const item = this.data[i];
-            if (i === lastIndex && lastIndex < startIndex) {
-              data.push(this.data[startIndex]);
-            }
-            data.push(item);
-            if (i === lastIndex && lastIndex > startIndex) {
-              data.push(this.data[startIndex]);
-            }
+            this.store.commit('setData', data);
+            sortData = data;
           }
-          this.store.commit('setData', data);
-          this.table.$emit('data-sort', data, startIndex, lastIndex);
+          this.table.$emit('data-sort', startIndex, lastIndex, sortData);
         }
         // 无论是否移动都清除
         this.setDragTdsStyle(startIndex, lastIndex, true);

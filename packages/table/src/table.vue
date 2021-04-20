@@ -43,6 +43,7 @@
         :row-style="rowStyle"
         :highlight="highlightCurrentRow"
         :sortable="sortable"
+        :not-sort-data="notSortData"
         :style="{
            width: bodyWidth
         }">
@@ -117,6 +118,7 @@
           :row-class-name="rowClassName"
           :row-style="rowStyle"
           :sortable="sortable"
+          :not-sort-data="notSortData"
           :style="{
             width: bodyWidth
           }">
@@ -179,6 +181,7 @@
           :row-style="rowStyle"
           :highlight="highlightCurrentRow"
           :sortable="sortable"
+          :not-sort-data="notSortData"
           :style="{
             width: bodyWidth
           }">
@@ -340,7 +343,9 @@
       load: Function,
 
       // 拖动排序表格行
-      sortable: Boolean
+      sortable: Boolean,
+
+      notSortData: Boolean
     },
 
     components: {
