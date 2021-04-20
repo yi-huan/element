@@ -255,7 +255,7 @@ export default {
         : 'small';
     },
     isDisabled() {
-      return this.disabled || (this.elForm || {}).disabled;
+      return typeof this.$attrs.disable === 'boolean' ? this.$attrs.disable : (this.disabled || (this.elForm || {}).disabled);
     },
     config() {
       const config = this.props || {};

@@ -113,8 +113,8 @@
       },
       isDisabled() {
         return this.isGroup
-          ? this._radioGroup.disabled || this.disabled || (this.elForm || {}).disabled
-          : this.disabled || (this.elForm || {}).disabled;
+          ? this._radioGroup.disabled || (typeof this.$attrs.disable === 'boolean' ? this.$attrs.disable : (this.disabled || (this.elForm || {}).disabled))
+          : (typeof this.$attrs.disable === 'boolean' ? this.$attrs.disable : (this.disabled || (this.elForm || {}).disabled));
       },
       tabIndex() {
         return (this.isDisabled || (this.isGroup && this.model !== this.label)) ? -1 : 0;

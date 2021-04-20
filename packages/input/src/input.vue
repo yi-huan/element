@@ -216,7 +216,7 @@
         return this.size || this._elFormItemSize || (this.$ELEMENT || {}).size;
       },
       inputDisabled() {
-        return this.disabled || (this.elForm || {}).disabled;
+        return typeof this.$attrs.disable === 'boolean' ? this.$attrs.disable : (this.disabled || (this.elForm || {}).disabled);
       },
       nativeInputValue() {
         return this.value === null || this.value === undefined ? '' : String(this.value);

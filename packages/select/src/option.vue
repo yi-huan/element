@@ -137,7 +137,7 @@
       },
 
       queryChange(query) {
-        this.visible = new RegExp(escapeRegexpString(query), 'i').test(this.currentLabel) || this.created;
+        this.visible = !query || new RegExp(escapeRegexpString(query), 'i').test(this.currentLabel) || this.created;
         if (!this.visible) {
           this.select.filteredOptionsCount--;
         }

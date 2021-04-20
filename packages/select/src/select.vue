@@ -111,7 +111,7 @@
         :is="optionsComponentName"
         ref="popper"
         :append-to-body="popperAppendToBody"
-        v-show="(shownPopper || visible) && emptyText !== false">
+        v-show="shownPopper || (visible && emptyText !== false)">
         <el-scrollbar
           tag="ul"
           wrap-class="el-select-dropdown__wrap"
@@ -232,7 +232,7 @@
       },
 
       selectDisabled() {
-        return this.disabled || (this.elForm || {}).disabled;
+        return typeof this.$attrs.disable === 'boolean' ? this.$attrs.disable : (this.disabled || (this.elForm || {}).disabled);
       },
 
       collapseTagSize() {

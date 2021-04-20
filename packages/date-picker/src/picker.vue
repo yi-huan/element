@@ -546,7 +546,7 @@ export default {
     },
 
     pickerDisabled() {
-      return this.disabled || (this.elForm || {}).disabled;
+      return typeof this.$attrs.disable === 'boolean' ? this.$attrs.disable : (this.disabled || (this.elForm || {}).disabled);
     },
 
     firstInputId() {
